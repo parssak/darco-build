@@ -1,23 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
-
+import Steps from './components/Steps';
+import PDFPreview from './components/PDFPreview';
+import { Title } from './styles'
+import { useState } from 'react';
 function App() {
+  const [step, setStep] = useState(1);
+  const [file, setFile] = useState('');
+
+  function onFileChange(event) {
+    setFile(event.target.files[0]);
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Title>Darco</Title>
+      <div className="wrapper">
+        <Steps currentStep={step} onFileChange={onFileChange}/>
+        <PDFPreview file={file}/>
+      </div>
     </div>
   );
 }
