@@ -49,3 +49,17 @@ canvas {
   height: 100% !important;
   position: relative;
 }
+
+.h {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+h4 {
+  font-size: 0.8rem;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0px;
+  text-align: left;
+}

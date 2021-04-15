@@ -4,7 +4,7 @@ import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
 
 
 const Preview = styled.div`
-    background: green;
+    /* background: #000; */
     flex-grow: 1;
     display: flex;
     justify-content: center;
@@ -16,11 +16,11 @@ const options = {
     cMapPacked: true,
 };
 
-const PDFPreview = ({ file }) => {
+const PDFPreview = ({ file, nextStep }) => {
     const [numPages, setNumPages] = useState(null);
     function onDocumentLoadSuccess(pdf) {
         setNumPages(pdf.nextNumPages);
-        console.log(pdf);
+        nextStep()
     }
     if (file === '')
         return null
