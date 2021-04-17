@@ -63,7 +63,7 @@ const Steps = () => {
                     <StepDescription>Export PDF anywhere</StepDescription>
                 </StepTextWrapper>
             </Step>
-            <Button onClick={onButtonClick}>{state.step}</Button>
+            <Button onClick={onButtonClick}>{buttonTexts[state.step]}</Button>
             <input type="file" accept="application/pdf" ref={inputFile} style={{ display: 'none' }} onChange={onFileChange} />
         </>
     );

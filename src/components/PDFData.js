@@ -4,6 +4,8 @@ import { useDarco, ReducerTypes } from '../DarcoContext';
 import { Button, SidePanel } from '../styles'
 import SegmentedPicker from './SegmentedPicker';
 import ThemePicker from './ThemePicker';
+import { ReactComponent as DarkMode } from '../svgs/darkmode.svg';
+
 
 const DataTitle = styled.h3`
     font-size: 1.4rem;
@@ -38,7 +40,22 @@ const PDFData = () => {
     const onFileChange = e => dispatch({ type: ReducerTypes.Load, data: e.target.files[0] })
 
     if (state.step > ReducerTypes.Converting)
-        return null
+        return (
+            <SidePanel>
+                <DataSection >
+                    <div className="h">
+                        <DarkMode fill="white"/>
+                        <DataTitle bottomSpaced>{state.step === ReducerTypes.Converting ? "Converting PDF" : "Converted PDF 🎉"}</DataTitle>
+                    </div>
+                <DataSection>
+                    <div className="h">
+                        <DataTitle>{state.pdf.name}</DataTitle>
+                        <h3>{Math.round(state.pdf.size / 1024)} Kb</h3>
+                    </div>
+                </DataSection>
+                </DataSection>
+            </SidePanel>
+        )
 
 
     return (
