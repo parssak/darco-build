@@ -63,19 +63,19 @@ const StepDescription = styled.p`
     font-size: 1.2rem;
     letter-spacing: -0.04rem;
 `
-const Steps = ({ currentStep, onFileChange }) => {
+const Steps = ({ currentStep }) => {
     const inputFile = useRef(null)
     const context = usePdf()
-    console.log("left panel got: ", context)
     const onButtonClick = () => {
-        switch (currentStep) {
-            case 1:
-                inputFile.current.click();
-                break;
-            default:
-                break;
-        }
+        console.log("clicked");
+        if (context.state.pdf === null)
+            inputFile.current.click()
     };
+
+    const onFileChange = e => {
+        console.log(e);
+        context.dispatch({ type: 'load',  data: e.target.files[0] })
+    }
 
     return (
             <StepsContainer>

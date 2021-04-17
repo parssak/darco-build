@@ -12,6 +12,8 @@ export const Theme = {
 
 const defaultState = {
     pdf: null,
+    step: 1,
+    info: null,
     settings: {
         quality: Quality.high,
         theme: Theme.classic
@@ -19,9 +21,14 @@ const defaultState = {
 }
 
 function reducer(state, action) {
+    console.log("Called reducer", action)
     switch (action.type) {
         case 'load': {
-            return { ...state, pdf: action.data}
+            return { ...state, pdf: action.data, step: 2}
+        }
+            
+        case 'info': {
+            return { ...state, info: action.data, step: 3 }
         }
 
         default: {

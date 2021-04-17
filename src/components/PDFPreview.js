@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
+import { usePdf } from '../DarcoContext';
 
 
 const Preview = styled.div`
@@ -16,25 +16,21 @@ const options = {
     cMapPacked: true,
 };
 
-const PDFPreview = ({ file, nextStep, setPdfPages }) => {
-    const [numPages, setNumPages] = useState(null);
-    
+const PDFPreview = () => {
+    const context = usePdf()
     function onDocumentLoadSuccess(pdf) {
         console.log(pdf)
-        setNumPages(pdf._pdfInfo.numPages);
-        nextStep()
+        context.dispatch({ type: 'info', data: pdf._pdfInfo})
     }
 
-    useEffect(() => {
-        setPdfPages(numPages);
-    }, [setPdfPages, numPages]);
-    if (file === '')
+    if (context.state.pdf === null)
         return null
+    
     return (
         <Preview>
             <Document
                 className={'pdf'}
-                file={file}
+                file={context.state.pdf}
                 onLoadSuccess={onDocumentLoadSuccess}
                 options={options}
             >
