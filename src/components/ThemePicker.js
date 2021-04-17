@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { usePdf, Theme } from '../DarcoContext';
+import { Theme } from '../DarcoContext';
 import { ReactComponent as Page } from '../svgs/page.svg';
 
 const PagePreview = styled.div`

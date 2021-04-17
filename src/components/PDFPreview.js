@@ -48,7 +48,7 @@ const PDFPreview = () => {
                         key={`page_${0}`}
                         pageNumber={0 + 1}
                         scale={0.8}
-                        className="page"
+                        className={[state.options.theme, 'page']}
                     />
                     
                 }

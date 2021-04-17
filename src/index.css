@@ -44,9 +44,6 @@ canvas {
   border-radius: 0.6rem;
 }
 
-.page {
-  filter: invert(0.96) !important;
-}
 
 .h {
   display: flex;
@@ -67,4 +64,16 @@ h4 {
   flex-direction: column;
   height: 100%;
   justify-content: space-between;
+}
+
+.page {
+  transition: filter 0.1s ease;
+}
+
+.grey {
+  filter: invert(0.8) contrast(1.2) hue-rotate(135rad);
+}
+
+.classic {
+  filter: invert(1);
 }
