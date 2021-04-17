@@ -44,7 +44,6 @@ canvas {
   border-radius: 0.6rem;
 }
 
-
 .h {
   display: flex;
   width: 100%;
@@ -76,4 +75,8 @@ h4 {
 
 .classic {
   filter: invert(1);
+}
+
+.hidden {
+  display: none;
 }

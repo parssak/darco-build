@@ -6,12 +6,12 @@ import { ReactComponent as Download } from '../svgs/download.svg';
 import { ReactComponent as DarkMode } from '../svgs/darkmode.svg';
 import { ReactComponent as Share } from '../svgs/share.svg';
 import { primary, success } from '../styles/constants';
-import { usePdf } from '../DarcoContext';
+import { useDarco } from '../DarcoContext';
 
 const buttonTexts = ["", "Select", "Convert", "Download"]
 
 const Steps = () => {
-    const { state, dispatch } = usePdf()
+    const { state, dispatch } = useDarco()
     const inputFile = useRef(null)
     
     const onButtonClick = () => {

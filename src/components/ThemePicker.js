@@ -48,7 +48,7 @@ const ThemePicker = ({onSelectionChange = e => { }}) => {
     return (
         <ThemePickerContainer>
             {
-                Object.keys(Theme).map(e => <ThemeOption theme={Theme[e]} selected={e === selected} handleSelect={() => setSelected(e)} />)
+                Object.keys(Theme).map(e => <ThemeOption theme={Theme[e]} selected={e === selected} handleSelect={() => setSelected(e)} key={e}/>)
             }
         </ThemePickerContainer>
     );

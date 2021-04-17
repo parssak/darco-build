@@ -31,21 +31,23 @@ export const ReducerTypes = {
     Convert: 'convert',
     O_Quality: 'quality',
     O_Theme: 'theme',
+    ImagesConverted: 'images',
 }
 function reducer(state, action) {
-    console.log("Called reducer", action)
     let currOptions = state.options;
     switch (action.type) {
         case ReducerTypes.Load:
             return { ...state, pdf: action.data, step: 2 }
         case ReducerTypes.Info:
             return { ...state, info: action.data, step: 3 }
+        case ReducerTypes.ImagesConverted:
+            return { ...state, images: action.data }
         case ReducerTypes.O_Quality:
             currOptions.quality = action.data
-            return { ...state, options: currOptions}
+            return { ...state, options: currOptions }
         case ReducerTypes.O_Theme:
             currOptions.theme = action.data
-            return { ...state, options: currOptions}
+            return { ...state, options: currOptions }
         default: {
             throw new Error(`Unhandled action type: ${action.type}`)
         }
@@ -54,7 +56,7 @@ function reducer(state, action) {
 }
 
 export const DarcoContext = React.createContext();
-export const usePdf = () => {
+export const useDarco = () => {
     const context = React.useContext(DarcoContext)
     if (context === undefined)
         throw new Error('useCount must be used within a DarcoProvider')

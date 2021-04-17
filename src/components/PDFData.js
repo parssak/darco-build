@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
-import { usePdf, ReducerTypes } from '../DarcoContext';
+import { useDarco, ReducerTypes } from '../DarcoContext';
 import { Button, SidePanel } from '../styles'
 import SegmentedPicker from './SegmentedPicker';
 import ThemePicker from './ThemePicker';
@@ -19,20 +19,18 @@ const DataSection = styled.div`
 `
 const PDFData = () => {
     const inputFile = useRef(null)
-    const { state, dispatch } = usePdf()
+    const { state, dispatch } = useDarco()
     
     const options = ['High', 'Low'];
     if (!state.info)
         return null
     
     const updateTheme = e => {
-        console.log("Got ", e);
         if (state.options.theme !== e)
             dispatch({type: ReducerTypes.O_Theme, data: e})
     }
 
     const updateQuality = e => {
-        console.log("Got ", e);
         if (state.options.quality !== e)
             dispatch({ type: ReducerTypes.O_Quality, data: e })
     }

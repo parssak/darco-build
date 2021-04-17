@@ -17,6 +17,7 @@ function App() {
         <LeftPanel/>
         <PDFPreview/>
         <PDFData/>
+      {/* <DarkPDF/> */}
     </AppContainer>
   );
 }
