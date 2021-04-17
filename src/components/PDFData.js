@@ -1,6 +1,6 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
-import { usePdf } from '../DarcoContext';
+import { usePdf, ReducerTypes } from '../DarcoContext';
 import { Button, SidePanel } from '../styles'
 import SegmentedPicker from './SegmentedPicker';
 import ThemePicker from './ThemePicker';
@@ -20,10 +20,22 @@ const DataSection = styled.div`
 const PDFData = () => {
     const inputFile = useRef(null)
     const { state, dispatch } = usePdf()
-    const [selection, setSelection] = useState(0);
+    
     const options = ['High', 'Low'];
     if (!state.info)
         return null
+    
+    const updateTheme = e => {
+        console.log("Got ", e);
+        if (state.options.theme !== e)
+            dispatch({type: ReducerTypes.O_Theme, data: e})
+    }
+
+    const updateQuality = e => {
+        console.log("Got ", e);
+        if (state.options.quality !== e)
+            dispatch({ type: ReducerTypes.O_Quality, data: e })
+    }
     
     const onFileChange = e => dispatch({ type: 'load', data: e.target.files[0] })
     return (
@@ -44,17 +56,14 @@ const PDFData = () => {
                 </div>
                 <SegmentedPicker
                     options={options}
-                    // selection={selection}
-                    // onSelectionChange={(newSelection) => {
-                    //     setSelection(newSelection);
-                    // }}
+                    onSelectionChange={updateQuality}
                 />
             </DataSection>
             <DataSection style={{height: '33%'}}>
                 <div className="h">
                     <DataTitle bottomSpaced>Theme</DataTitle>
                 </div>
-                <ThemePicker/>
+                <ThemePicker onSelectionChange={updateTheme}/>
             </DataSection>
             <Button secondary onClick={() => inputFile.current.click()} style={{ marginTop: 'auto'}}>Select New File</Button>
             <input type="file" accept="application/pdf" ref={inputFile} style={{ display: 'none' }} onChange={onFileChange} />

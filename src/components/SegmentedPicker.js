@@ -42,12 +42,12 @@ const SegmentedPicker = ({ options, defaultSelected = 0, onSelectionChange = e =
     const [selected, setSelected] = useState(defaultSelected);
     useEffect(() => {
         onSelectionChange(selected)
-    }, [selected])
+    }, [onSelectionChange, selected])
     console.log(selected)
     return (
         <PickerContainer>
             {
-                options.map((e, i) => <Option name={e} key={uuidv4()} handleSelect={() => setSelected(i)}/>)
+                options.map((e, i) => <Option name={e} key={uuidv4()} handleSelect={() => setSelected(i)} />)
             }
             <SelectedOption offset={selected === 0 ? 0 : selected * 100 / options.length}/>
         </PickerContainer>

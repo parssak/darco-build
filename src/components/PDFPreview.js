@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
-import { usePdf } from '../DarcoContext';
+import { ReducerTypes, usePdf } from '../DarcoContext';
 
 
 const Preview = styled.div`
@@ -20,7 +20,7 @@ const PDFPreview = () => {
     const { state, dispatch } = usePdf()
     function onDocumentLoadSuccess(pdf) {
         console.log(pdf)
-        dispatch({ type: 'info', data: pdf._pdfInfo})
+        dispatch({ type: ReducerTypes.Info, data: pdf._pdfInfo})
     }
 
     if (state.pdf === null)

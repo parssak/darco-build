@@ -1,30 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { usePdf, Theme } from '../DarcoContext';
-import { tertiary } from '../styles/constants';
-import { ReactComponent as GreyPage } from '../svgs/greypage.svg';
+import { ReactComponent as Page } from '../svgs/page.svg';
 
 const PagePreview = styled.div`
-    filter: invert(1);
+    filter: ${props => props.convert};
     `
 const ThemeOptionContainer = styled.div`
-      ${props => props.selected && `background-color: ${tertiary};`};
+      ${props => props.selected && `background-color: rgba(255, 255, 255, 0.06);`};
       flex-grow: 0.5;
       border-radius: 8.91px;
       width: 50%;
       & > * {
           height: 100%;
           padding: 1rem;
-      }
+      };
+      
     `;
 const ThemeOption = ({ theme, selected, handleSelect }) => {
     return (
         <ThemeOptionContainer selected={selected} onClick={handleSelect}>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <PagePreview>
-                    <GreyPage />
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <PagePreview convert={theme.convert}>
+                    <Page />
                 </PagePreview>
-                <p style={{ alignSelf: 'center', marginTop: '0.4rem', textTransform: 'capitalize' }}>{theme}</p>
+                <p style={{ marginTop: '0.4rem', textTransform: 'capitalize' }}>{theme.name}</p>
             </div>
         </ThemeOptionContainer>
     )
@@ -35,17 +35,20 @@ const ThemePickerContainer = styled.div`
     height: 100%;
     & > * {
         transition: all 0.3s ease;
-    }
+    };
 `;
 
-const ThemePicker = () => {
-    const [selected, setSelected] = useState(0);
-    const { state, dispatch } = usePdf();
-
+const ThemePicker = ({onSelectionChange = e => { }}) => {
+    const [selected, setSelected] = useState(Object.keys(Theme)[0]);
+    
+    useEffect(() => {
+        onSelectionChange(selected)
+        
+    }, [onSelectionChange, selected])
     return (
         <ThemePickerContainer>
             {
-                Object.values(Theme).map(e => <ThemeOption theme={e} selected={e === selected} handleSelect={() => setSelected(e)} />)
+                Object.keys(Theme).map(e => <ThemeOption theme={Theme[e]} selected={e === selected} handleSelect={() => setSelected(e)} />)
             }
         </ThemePickerContainer>
     );
