@@ -3,6 +3,8 @@ import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
 import { ReducerTypes, useDarco } from '../DarcoContext';
 import {  useRef, useState } from 'react';
 import invertImage from '../helpers/invertImage';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import DarkPDF from './DarkPDF';
 
 
 const Preview = styled.div`
@@ -17,6 +19,7 @@ const options = {
     cMapUrl: 'cmaps/',
     cMapPacked: true,
 };
+
 let children = []
 let images = []
 const PDFPreview = () => {
@@ -45,14 +48,8 @@ const PDFPreview = () => {
         images[index] = resultImage;
         if (images.length === numPages && images.every(function (i) { return i !== null }))
         {
-            console.log("All pages converted!");
-            
-
+            dispatch({type: ReducerTypes.ImagesConverted, data: images})
         }
-        // let download = document.createElement('a');
-        // download.href = await invertImage(children[index]?.toDataURL(), children[index])
-        // download.download = 'reddot.png';
-        // download.click();
     }
     return (
         <Preview>
@@ -88,6 +85,14 @@ const PDFPreview = () => {
                     )
                 }
             </Document>
+            {
+                state.images !== null &&
+                <PDFDownloadLink document={<DarkPDF images={state.images}/>} fileName={state.pdf.name}>
+                    {({ blob, url, loading, error }) =>
+                        loading ? 'Loading document...' : 'Download now!'
+                    }
+                </PDFDownloadLink>
+            }
         </Preview>
     );
 }

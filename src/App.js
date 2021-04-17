@@ -14,10 +14,9 @@ display: flex;
 function App() {
   return (
     <AppContainer>
-        <LeftPanel/>
-        <PDFPreview/>
-        <PDFData/>
-      {/* <DarkPDF/> */}
+      <LeftPanel />
+      <PDFPreview />
+      <PDFData />
     </AppContainer>
   );
 }

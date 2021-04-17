@@ -20,6 +20,7 @@ const defaultState = {
     pdf: null,
     step: 1,
     info: null,
+    images: null,
     options: {
         quality: Quality.high,
         theme: Theme.classic
@@ -37,7 +38,7 @@ function reducer(state, action) {
     let currOptions = state.options;
     switch (action.type) {
         case ReducerTypes.Load:
-            return { ...state, pdf: action.data, step: 2 }
+            return { ...state, pdf: action.data, step: 2, images: null }
         case ReducerTypes.Info:
             return { ...state, info: action.data, step: 3 }
         case ReducerTypes.ImagesConverted:
@@ -59,7 +60,7 @@ export const DarcoContext = React.createContext();
 export const useDarco = () => {
     const context = React.useContext(DarcoContext)
     if (context === undefined)
-        throw new Error('useCount must be used within a DarcoProvider')
+        throw new Error('context must be used within a DarcoProvider')
     return context
 }
 

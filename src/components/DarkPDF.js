@@ -1,30 +1,36 @@
 import React from 'react';
-import ReactPDF, { Page, Text, View, Document, StyleSheet, PDFDownloadLink, PDFViewer, PDFRenderer } from '@react-pdf/renderer';
-import { useDarco } from '../DarcoContext';
+import  { Page,  Document, StyleSheet, Image } from '@react-pdf/renderer';
 
 // Create styles
 const styles = StyleSheet.create({
     page: {
         flexDirection: 'row',
-        backgroundColor: '#E4E4E4'
-    },
-    section: {
-        margin: 10,
-        padding: 10,
-        flexGrow: 1
+        backgroundColor: '#000000'
     }
 });
-const DarkPDF = () => {
-    const { state } = useDarco();
-    console.log(state);
+const DarkPDF = ({images}) => {
     return (
-        <PDFViewer>
-            <Document onRender={e => console.log(e)}>
-                <Page size="A4" style={styles.page}>
-                    <Text>Hello world</Text>
-                </Page>
+            <Document onRender={e => console.log(e)} >
+                {
+                    images.map(e => {
+                        return (
+                            <Page size="A4" style={styles.page}>
+                                <Image src={e} />
+                            </Page>
+
+                        )
+                    })
+                }
+
+                {/* <Page size="A4" style={styles.page}>
+                    <Image src={state.images[0]} />
+                </Page> */}
+                {/* <Page size="A4" style={styles.page}>
+                    <Image src={state.images[1]} />
+                </Page> */}
             </Document>
-        </PDFViewer>
+            
+        // </PDFViewer>
     );
 }
 export default DarkPDF;
