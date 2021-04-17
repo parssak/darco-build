@@ -20,3 +20,10 @@ export const Button = styled.button`
     line-height: 1.5rem;
     ${props => props.secondary && `background: ${disabled};`}
 `
+
+export const SidePanel = styled.div`
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+`

@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
 
-import { Button, Title } from '../styles';
+import { Button } from '../styles';
 import { ReactComponent as Download } from '../svgs/download.svg';
 import { ReactComponent as DarkMode } from '../svgs/darkmode.svg';
 import { ReactComponent as Share } from '../svgs/share.svg';
@@ -58,9 +58,9 @@ font-size: 1.2rem;
 letter-spacing: -0.04rem;
 `
 const StepDescription = styled.p`
-font-weight: 400;
-font-size: 1.2rem;
-letter-spacing: -0.04rem;
+    font-weight: 400;
+    font-size: 1.2rem;
+    letter-spacing: -0.04rem;
 
 `
 const Steps = ({ currentStep, onFileChange }) => {
@@ -77,8 +77,6 @@ const Steps = ({ currentStep, onFileChange }) => {
     };
 
     return (
-        <div className="left-bar">
-            <Title>Darco</Title>
             <StepsContainer>
                 <Step stepDiff={1 - currentStep}>
                     <Download fill={1 - currentStep < 0 ? success : primary}/>
@@ -104,7 +102,6 @@ const Steps = ({ currentStep, onFileChange }) => {
                 <Button onClick={onButtonClick}>{getButtonText(currentStep)}</Button>
                 <input type="file" accept="application/pdf" ref={inputFile} style={{ display: 'none' }} onChange={onFileChange} />
             </StepsContainer>
-        </div>
     );
 }
 

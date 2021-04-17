@@ -30,15 +30,7 @@ code {
   background: rgba(239, 239, 244, 1);
 }
 
-.App {
-  display: flex;
-  justify-content: space-between;
-  /* flex-grow: 1; */
-  padding: 5vw;
-  height: 100vh;
-  width: 100vw;
-  background: radial-gradient(142.86% 68.13% at 64.57% 133.75%, rgba(175, 82, 222, 0.41) 0%, rgba(42, 26, 135, 0) 100%), radial-gradient(64.33% 47.29% at 78.42% -7.16%, rgba(88, 86, 214, 0.72) 0%, rgba(0, 0, 0, 0) 100%), linear-gradient(0deg, #000000, #000000);
-}
+
 
 .center {
   display: flex;
