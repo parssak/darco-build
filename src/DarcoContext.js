@@ -8,7 +8,9 @@ export const Quality = {
 export const Theme = {
     grey: {
         name: 'space grey',
-        convert: 'invert(0.8) contrast(1.2) hue-rotate(135rad)'
+        convert: 'invert(0.8) contrast(1.2) hue-rotate(135rad)',
+        invertVal: 0.8,
+        hueVal: 0.3
     },
     classic: {
         name: 'classic',

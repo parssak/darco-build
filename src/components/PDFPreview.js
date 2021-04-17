@@ -44,7 +44,7 @@ const PDFPreview = () => {
     const getDataURL = async (e) => {
         const index = e._pageIndex;
         //! Might not need to make this await
-        let resultImage = await invertImage(children[index]?.toDataURL(), children[index])
+        let resultImage = await invertImage(children[index]?.toDataURL(), children[index], state.options)
         images[index] = resultImage;
         if (images.length === numPages && images.every(function (i) { return i !== null }))
         {
