@@ -17,20 +17,20 @@ const options = {
 };
 
 const PDFPreview = () => {
-    const context = usePdf()
+    const { state, dispatch } = usePdf()
     function onDocumentLoadSuccess(pdf) {
         console.log(pdf)
-        context.dispatch({ type: 'info', data: pdf._pdfInfo})
+        dispatch({ type: 'info', data: pdf._pdfInfo})
     }
 
-    if (context.state.pdf === null)
+    if (state.pdf === null)
         return null
     
     return (
         <Preview>
             <Document
                 className={'pdf'}
-                file={context.state.pdf}
+                file={state.pdf}
                 onLoadSuccess={onDocumentLoadSuccess}
                 options={options}
             >

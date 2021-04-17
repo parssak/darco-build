@@ -26,4 +26,7 @@ export const SidePanel = styled.div`
     flex-direction: column;
     height: 100%;
     justify-content: space-between;
+    & > * {
+        transition: all 0.5s ease;
+    }
 `
