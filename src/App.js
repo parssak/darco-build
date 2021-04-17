@@ -3,6 +3,9 @@ import PDFData from './components/PDFData';
 import { useEffect, useState } from 'react';
 import LeftPanel from './components/LeftPanel';
 import styled from 'styled-components';
+import DarcoProvider from './DarcoContext';
+
+
 
 const AppContainer = styled.div`
 display: flex;
@@ -20,7 +23,7 @@ function App() {
     setFile(event.target.files[0]);
   }
 
-  const nextStep = () => {}
+  const nextStep = () => { }
   useEffect(() => {
     if (file !== '')
       setStep(2)
@@ -30,8 +33,8 @@ function App() {
 
   return (
     <AppContainer>
-        <LeftPanel currentStep={step} onFileChange={onFileChange}/>
-        <PDFPreview file={file} nextStep={nextStep} setPdfPages={setPdfPages}/>
+        <LeftPanel currentStep={step} onFileChange={onFileChange} />
+        <PDFPreview file={file} nextStep={nextStep} setPdfPages={setPdfPages} />
         <PDFData file={file} pages={pdfPages} onFileChange={onFileChange} />
     </AppContainer>
   );

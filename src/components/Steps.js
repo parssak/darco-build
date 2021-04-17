@@ -6,6 +6,7 @@ import { ReactComponent as Download } from '../svgs/download.svg';
 import { ReactComponent as DarkMode } from '../svgs/darkmode.svg';
 import { ReactComponent as Share } from '../svgs/share.svg';
 import { primary, success } from '../styles/constants';
+import { usePdf } from '../DarcoContext';
 
 const getButtonText = step => {
     switch (step) {
@@ -61,11 +62,11 @@ const StepDescription = styled.p`
     font-weight: 400;
     font-size: 1.2rem;
     letter-spacing: -0.04rem;
-
 `
 const Steps = ({ currentStep, onFileChange }) => {
     const inputFile = useRef(null)
-
+    const context = usePdf()
+    console.log("left panel got: ", context)
     const onButtonClick = () => {
         switch (currentStep) {
             case 1:
