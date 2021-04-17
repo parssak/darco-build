@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
 
 
 const Preview = styled.div`
-    /* background: #000; */
+    flex-basis: content;
     flex-grow: 1;
     display: flex;
     justify-content: center;
@@ -16,12 +16,18 @@ const options = {
     cMapPacked: true,
 };
 
-const PDFPreview = ({ file, nextStep }) => {
+const PDFPreview = ({ file, nextStep, setPdfPages }) => {
     const [numPages, setNumPages] = useState(null);
+    
     function onDocumentLoadSuccess(pdf) {
-        setNumPages(pdf.nextNumPages);
+        console.log(pdf)
+        setNumPages(pdf._pdfInfo.numPages);
         nextStep()
     }
+
+    useEffect(() => {
+        setPdfPages(numPages);
+    }, [setPdfPages, numPages]);
     if (file === '')
         return null
     return (
@@ -33,15 +39,22 @@ const PDFPreview = ({ file, nextStep }) => {
                 options={options}
             >
                 {
-                    Array.from(
-                        new Array(numPages),
-                        (el, index) => (
-                            <Page
-                                key={`page_${index + 1}`}
-                                pageNumber={index + 1}
-                            />
-                        ),
-                    )
+                    // Array.from(
+                    //     new Array(numPages),
+                    //     (el, index) => (
+                    //         <Page
+                    //             key={`page_${index + 1}`}
+                    //             pageNumber={index + 1}
+                    //         />
+                    //     ),
+                    // )
+                    <Page
+                        key={`page_${0}`}
+                        pageNumber={0 + 1}
+                        scale={0.8}
+                        className="page"
+                    />
+                    
                 }
             </Document>
         </Preview>

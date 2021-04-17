@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { accent, disabled } from './constants';
 
 export const Title = styled.h1`
     font-size: 4.5rem;
@@ -6,15 +7,16 @@ export const Title = styled.h1`
     line-height: 80px;
     letter-spacing: -0.04em;
     text-align: left;
-    margin-top: 2rem;
+    margin-bottom: auto;
 `
 export const Button = styled.button`
     all: unset;
-    background: #5C44EF;
+    background: ${accent};
     text-align: center;
     letter-spacing: -0.04rem;
     padding: 0.7rem 7rem;
     border-radius: 0.5rem;
     font-weight: 600;
     line-height: 1.5rem;
+    ${props => props.secondary && `background: ${disabled};`}
 `
