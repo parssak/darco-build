@@ -43,7 +43,6 @@ const SegmentedPicker = ({ options, defaultSelected = 0, onSelectionChange = e =
     useEffect(() => {
         onSelectionChange(selected)
     }, [onSelectionChange, selected])
-    console.log(selected)
     return (
         <PickerContainer>
             {

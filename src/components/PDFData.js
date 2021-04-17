@@ -35,7 +35,12 @@ const PDFData = () => {
             dispatch({ type: ReducerTypes.O_Quality, data: e })
     }
     
-    const onFileChange = e => dispatch({ type: 'load', data: e.target.files[0] })
+    const onFileChange = e => dispatch({ type: ReducerTypes.Load, data: e.target.files[0] })
+
+    if (state.step > ReducerTypes.Converting)
+        return null
+
+
     return (
         <SidePanel>
             <DataSection>

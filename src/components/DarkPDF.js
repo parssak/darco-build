@@ -8,29 +8,20 @@ const styles = StyleSheet.create({
         backgroundColor: '#000000'
     }
 });
-const DarkPDF = ({images}) => {
+const DarkPDF = ({images, dimensions}) => {
     return (
             <Document onRender={e => console.log(e)} >
                 {
                     images.map(e => {
                         return (
-                            <Page size="A4" style={styles.page}>
+                            <Page size={{ width: dimensions[0], height: dimensions[1]}} style={styles.page}>
                                 <Image src={e} />
                             </Page>
 
                         )
                     })
                 }
-
-                {/* <Page size="A4" style={styles.page}>
-                    <Image src={state.images[0]} />
-                </Page> */}
-                {/* <Page size="A4" style={styles.page}>
-                    <Image src={state.images[1]} />
-                </Page> */}
             </Document>
-            
-        // </PDFViewer>
     );
 }
 export default DarkPDF;

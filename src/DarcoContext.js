@@ -14,37 +14,54 @@ export const Theme = {
     },
     classic: {
         name: 'classic',
-        convert: 'invert(1)'
+        convert: 'invert(1)',
+        invertVal: 1,
+        hueVal: 0.5
     },
 }
 
 const defaultState = {
     pdf: null,
-    step: 1,
+    step: 0,
     info: null,
     images: null,
+    dimensions: [],
     options: {
         quality: Quality.high,
         theme: Theme.classic
     }
 }
 export const ReducerTypes = {
-    Load: 'load',
-    Info: 'info',
-    Convert: 'convert',
+    Load: 0,
+    Info: 1,
+    Convert: 2,
+    Converting: 3,
+    ImagesConverted: 4,
+    Download: 5,
+    PressedDownload: 6,
     O_Quality: 'quality',
     O_Theme: 'theme',
-    ImagesConverted: 'images',
+    DocumentDimensions: 'dimensions'
 }
 function reducer(state, action) {
     let currOptions = state.options;
     switch (action.type) {
         case ReducerTypes.Load:
-            return { ...state, pdf: action.data, step: 2, images: null }
+            return { ...state, pdf: action.data, images: null }
         case ReducerTypes.Info:
-            return { ...state, info: action.data, step: 3 }
+            return { ...state, info: action.data, step: ReducerTypes.Convert}
+        case ReducerTypes.Convert:
+            return { ...state, step: ReducerTypes.Convert }
+        case ReducerTypes.Converting:
+            return { ...state, step: ReducerTypes.Converting }
         case ReducerTypes.ImagesConverted:
-            return { ...state, images: action.data }
+            return { ...state, images: action.data, step: ReducerTypes.ImagesConverted }
+        case ReducerTypes.Download:
+            return { ...state, step: ReducerTypes.Download }
+        case ReducerTypes.PressedDownload:
+            return { ...state, step: ReducerTypes.PressedDownload}
+        case ReducerTypes.DocumentDimensions:
+            return { ...state, dimensions: action.data}
         case ReducerTypes.O_Quality:
             currOptions.quality = action.data
             return { ...state, options: currOptions }

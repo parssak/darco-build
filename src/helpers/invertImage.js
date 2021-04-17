@@ -1,4 +1,4 @@
-export default async function invertImage(imageURL, canvas, hueRotateAmount = 0.5, invertAmount = 1) {
+export default async function invertImage(imageURL, canvas, hueRotateAmount = 0.7, invertAmount = 0.8, contrastAmount = 1.25) {
     return new Promise((resolve, reject) => {
         let img = new Image();
         img.crossOrigin = "";
@@ -23,6 +23,12 @@ export default async function invertImage(imageURL, canvas, hueRotateAmount = 0.
                 data[i + 2] = Math.abs(data[i + 2] - 255 * invertAmount);
             }
 
+            const { length } = data;
+            for (let i = 0; i < length; i += 4) {
+                data[i + 0] = ((((data[i + 0] / 255) - .5) * contrastAmount) + .5) * 255;
+                data[i + 1] = ((((data[i + 1] / 255) - .5) * contrastAmount) + .5) * 255;
+                data[i + 2] = ((((data[i + 2] / 255) - .5) * contrastAmount) + .5) * 255;
+            }
 
             const rotateAmount = hueRotateAmount;
             const h = (rotateAmount % 1 + 1) % 1; // wraps the angle to unit interval, even when negative
@@ -84,9 +90,9 @@ export default async function invertImage(imageURL, canvas, hueRotateAmount = 0.
                     data[place + 2] = Math.floor(mg * ir + mh * ig + mi * ib);
                 }
             }
-            
+           
             ctx.putImageData(imageData, 0, 0);
-            resolve(canvas.toDataURL('image/jpeg', 1));
+            resolve(canvas.toDataURL());
         }
     })
 }
