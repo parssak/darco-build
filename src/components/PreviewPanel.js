@@ -5,6 +5,8 @@ import { useEffect, useRef, useState } from 'react';
 import invertImage from '../helpers/invertImage';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import DarkPDF from './DarkPDF';
+import LoadingModal from './LoadingModal'
+
 
 const Preview = styled.div`
     grid-area: preview;
@@ -25,6 +27,7 @@ const PreviewPanel = () => {
     const { state, dispatch } = useDarco()
     const [numPages, setNumPages] = useState(0);
     const [completedImages, setCompletedImages] = useState([]);
+    const [loadingStatus, setLoadingStatus] = useState(0);
     /**
      * 
      */
@@ -49,6 +52,11 @@ const PreviewPanel = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [completedImages, downloadRef]);
 
+    useEffect(() => {
+        dispatch({type: ReducerTypes.Progress, data: loadingStatus / numPages})
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [loadingStatus]);
+    
     if (state.pdf === null)
         return null
     
@@ -56,16 +64,18 @@ const PreviewPanel = () => {
 
     const getDataURL = async e => {
         const index = e._pageIndex;
-        // await invertImage(children[index]?.toDataURL(), children[index], state.options.theme.hueVal, state.options.theme.invertVal)
         invertImage(children[index]?.toDataURL(), children[index], state.options.theme.hueVal, state.options.theme.invertVal).then(
             e => {
                 images[index] = e;
                 if (images.length === numPages && images.every(function (i) { return i !== null })) {
                     setCompletedImages(images)
                 }
+                setLoadingStatus(loadingStatus => loadingStatus + 1)
             }
         )
     }
+
+
 
 
 
@@ -109,6 +119,9 @@ const PreviewPanel = () => {
                     )
                 }
             </Document>
+            {
+                <LoadingModal completion={state.completion}/>
+            }
             {
                 completedImages.length > 0 &&
 

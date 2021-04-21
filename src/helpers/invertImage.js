@@ -1,4 +1,4 @@
-export default async function invertImage(imageURL, canvas, hueRotateAmount = 0.7, invertAmount = 0.8, contrastAmount = 1.25) {
+export default async function invertImage(imageURL, canvas, hueRotateAmount = 0.7, invertAmount = 0.8, contrastAmount = 2) {
     return new Promise((resolve, reject) => {
         let img = new Image();
         img.crossOrigin = "";

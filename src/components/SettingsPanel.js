@@ -6,6 +6,13 @@ import SegmentedPicker from './SegmentedPicker';
 import ThemePicker from './ThemePicker';
 import { ReactComponent as DarkMode } from '../svgs/darkmode.svg';
 
+const SettingsPanelContainer = styled(SidePanel)`
+    grid-area: settings;
+    @media (max-width: 1000px) {
+        display: none;
+        ${props => props.show && `display: initial;`}
+    }
+`;
 
 const DataTitle = styled.h3`
     font-size: 1.4rem;
@@ -41,7 +48,7 @@ const SettingsPanel = () => {
 
     if (state.step >= ReducerTypes.Loading)
         return (
-            <SidePanel>
+            <SettingsPanelContainer>
                 <DataSection >
                     <div className="h">
                         <DarkMode fill="white"/>
@@ -54,12 +61,12 @@ const SettingsPanel = () => {
                     </div>
                 </DataSection>
                 </DataSection>
-            </SidePanel>
+            </SettingsPanelContainer>
         )
 
 
     return (
-        <SidePanel style={{ gridArea: `settings`}}>
+        <SettingsPanelContainer>
             <DataSection>
                 <div className="h">
                     <DataTitle>{state.pdf.name}</DataTitle>
@@ -87,7 +94,7 @@ const SettingsPanel = () => {
             </DataSection>
             <Button secondary onClick={() => inputFile.current.click()} style={{ marginTop: 'auto'}}>Select New File</Button>
             <input type="file" accept="application/pdf" ref={inputFile} style={{ display: 'none' }} onChange={onFileChange} />
-        </SidePanel>
+        </SettingsPanelContainer>
     )
 }
 

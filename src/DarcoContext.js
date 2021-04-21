@@ -26,6 +26,7 @@ const defaultState = {
     info: null,
     images: null,
     downloadRef: null,
+    completion: 0,
     dimensions: [],
     options: {
         quality: Quality.high,
@@ -38,6 +39,7 @@ export const ReducerTypes = {
     Loading: 2,
     Download: 3,
     ImagesConverted: 'images',
+    Progress: 'ratio',
     O_Quality: 'quality',
     O_Theme: 'theme',
     DocumentDimensions: 'dimensions'
@@ -54,7 +56,9 @@ function reducer(state, action) {
         case ReducerTypes.ImagesConverted:
             return { ...state, images: action.data.images, downloadRef: action.data.downloadRef, step: ReducerTypes.Download }
         case ReducerTypes.DocumentDimensions:
-            return { ...state, dimensions: action.data}
+            return { ...state, dimensions: action.data }
+        case ReducerTypes.Progress:
+            return { ...state, completion: action.data }
         case ReducerTypes.O_Quality:
             currOptions.quality = action.data
             return { ...state, options: currOptions }

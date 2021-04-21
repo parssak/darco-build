@@ -20,10 +20,16 @@ html {
   background-color: black;
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 1000px) {
   html {
-    font-size: 80%;
+    font-size: 90%;
+    /* color: red; */
   }
+}
+
+*>* {
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
 }
 
 code {
