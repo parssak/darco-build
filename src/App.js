@@ -7,14 +7,14 @@ import { Title } from './styles';
 const AppContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
-  grid-template-rows: 0.2fr 1.8fr;
+  grid-template-rows: 0.1fr 1.9fr;
   gap: 0px 0px;
   grid-template-areas:
     "title preview settings"
     "status preview settings";
   @media (max-width: 768px) {
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 0.3fr 1.6fr 1.1fr;
+    grid-template-rows: 0.1fr 1.6fr 1.1fr;
     grid-template-areas:
     "title title"
     "preview settings"
