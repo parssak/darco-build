@@ -19,9 +19,6 @@ const DataSubTitle = styled.h4`
 const DataSection = styled.div`
     margin-bottom: 1.5rem;
 `
-
-
-
 const SettingsPanel = () => {
     const inputFile = useRef(null)
     const { state, dispatch } = useDarco()
@@ -40,7 +37,7 @@ const SettingsPanel = () => {
             dispatch({ type: ReducerTypes.O_Quality, data: e })
     }
     
-    const onFileChange = e => dispatch({ type: ReducerTypes.Load, data: e.target.files[0] })
+    const onFileChange = e => dispatch({ type: ReducerTypes.Idle, data: e.target.files[0] })
 
     if (state.step > ReducerTypes.Converting)
         return (

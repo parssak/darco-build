@@ -8,29 +8,22 @@ import { ReactComponent as Share } from '../svgs/share.svg';
 import { primary, success, loading } from '../styles/constants';
 import { ReducerTypes, useDarco } from '../DarcoContext';
 
-const buttonTexts = ["Select", "Loading", "Convert", "Converting", "Converted", "Download", "Download"]
+const buttonTexts = ["Idle", "Ready", "Loading", "Download"]
 
 const Steps = () => {
     const { state, dispatch } = useDarco()
     const inputFile = useRef(null)
 
     const onButtonClick = () => {
-        console.log("onn button clikc")
         switch (state.step) {
-            case ReducerTypes.Load:
+            case ReducerTypes.Idle:
                 inputFile.current.click()
                 break
-            case ReducerTypes.Info:
-                dispatch({ type: ReducerTypes.Convert });
-                break;
-            case ReducerTypes.Convert:
-                dispatch({ type: ReducerTypes.Converting });
-                break;
-            case ReducerTypes.ImagesConverted:
-                dispatch({ type: ReducerTypes.Download });
+            case ReducerTypes.Ready:
+                dispatch({ type: ReducerTypes.Loading });
                 break;
             case ReducerTypes.Download:
-                dispatch({ type: ReducerTypes.PressedDownload });
+                state.downloadRef.click()
                 break;
             default:
                 break;
@@ -38,7 +31,7 @@ const Steps = () => {
 
     }
 
-    const onFileChange = e => dispatch({ type: ReducerTypes.Load, data: e.target.files[0] })
+    const onFileChange = e => dispatch({ type: ReducerTypes.Idle, data: e.target.files[0] })
 
     return (
         <div style={{marginTop: 'auto'}}>

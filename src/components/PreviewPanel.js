@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
 import { ReducerTypes, useDarco } from '../DarcoContext';
-import {  useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import invertImage from '../helpers/invertImage';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import DarkPDF from './DarkPDF';
@@ -24,34 +24,48 @@ let images = []
 const PreviewPanel = () => {
     const { state, dispatch } = useDarco()
     const [numPages, setNumPages] = useState(0);
+    const [completedImages, setCompletedImages] = useState([]);
+    /**
+     * 
+     */
     const docRef = useRef(null);
     const downloadRef = useRef(null);
 
     function onDocumentLoadSuccess(pdf) {
         setNumPages(pdf._pdfInfo.numPages);
-        dispatch({ type: ReducerTypes.Info, data: pdf._pdfInfo })
+        dispatch({ type: ReducerTypes.Ready, data: pdf._pdfInfo })
     }
 
     useEffect(() => {
-        if (state.step === ReducerTypes.PressedDownload)
-        {
-            downloadRef.current.click()
-            // dispatch({type: ReducerTypes.Download})
-            
-            }
-    }, [state])
+        if (completedImages.length > 0 && downloadRef.current !== null) {
+            console.log(completedImages)
+            dispatch({
+                type: ReducerTypes.ImagesConverted, data: {
+                    images: images,
+                    downloadRef: downloadRef.current
+                }
+            })
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [completedImages, downloadRef]);
 
     if (state.pdf === null)
         return null
+    
     const storeCanvasRef = (canvasEl, index) => children[index] = canvasEl
 
     const getDataURL = async e => {
         const index = e._pageIndex;
-        let resultImage = await invertImage(children[index]?.toDataURL(), children[index], state.options.theme.hueVal, state.options.theme.invertVal )
+        let resultImage = await invertImage(children[index]?.toDataURL(), children[index], state.options.theme.hueVal, state.options.theme.invertVal)
         images[index] = resultImage;
         if (images.length === numPages && images.every(function (i) { return i !== null }))
-            dispatch({type: ReducerTypes.ImagesConverted, data: images})
+        {
+            setCompletedImages(images)
+            }
+            
     }
+
+
 
     return (
         <Preview>
@@ -68,11 +82,11 @@ const PreviewPanel = () => {
                         pageNumber={0 + 1}
                         scale={0.8}
                         className={[state.options.theme, 'page']}
-                        onLoadSuccess={e => dispatch({ type: ReducerTypes.DocumentDimensions, data:[e.originalWidth, e.originalHeight]})}
+                        onLoadSuccess={e => dispatch({ type: ReducerTypes.DocumentDimensions, data: [e.originalWidth, e.originalHeight] })}
                     />
                 }
                 {
-                    state.step === 3 &&
+                    state.step === ReducerTypes.Loading &&
                     Array.from(
                         new Array(numPages),
                         (el, index) => (
@@ -86,21 +100,21 @@ const PreviewPanel = () => {
                                 className={['hidden']}
                                 canvasRef={e => storeCanvasRef(e, index)}
                                 onRenderSuccess={e => getDataURL(e)}
-                                
+
                             />
-                            
+
                         ),
                     )
                 }
             </Document>
             {
-                state.images !== null && 
-                
-                <PDFDownloadLink document={<DarkPDF images={state.images} dimensions={state.dimensions}/>} fileName={state.pdf.name}>
+                completedImages.length > 0 &&
+
+                <PDFDownloadLink document={<DarkPDF images={completedImages} dimensions={state.dimensions} />} fileName={state.pdf.name}>
                     {({ blob, url, loading, error }) =>
-                        <button ref={downloadRef} style={{ display: 'none' }} onClick={() => dispatch({type: ReducerTypes.Download})}>download</button>
-                        }
-                    </PDFDownloadLink>
+                        <button ref={downloadRef} style={{ display: 'none' }}>download</button>
+                    }
+                </PDFDownloadLink>
             }
         </Preview>
     );

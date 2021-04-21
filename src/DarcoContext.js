@@ -25,6 +25,7 @@ const defaultState = {
     step: 0,
     info: null,
     images: null,
+    downloadRef: null,
     dimensions: [],
     options: {
         quality: Quality.high,
@@ -32,13 +33,11 @@ const defaultState = {
     }
 }
 export const ReducerTypes = {
-    Load: 0,
-    Info: 1,
-    Convert: 2,
-    Converting: 3,
-    ImagesConverted: 4,
-    Download: 5,
-    PressedDownload: 6,
+    Idle: 0,
+    Ready: 1,
+    Loading: 2,
+    Download: 3,
+    ImagesConverted: 'images',
     O_Quality: 'quality',
     O_Theme: 'theme',
     DocumentDimensions: 'dimensions'
@@ -46,20 +45,14 @@ export const ReducerTypes = {
 function reducer(state, action) {
     let currOptions = state.options;
     switch (action.type) {
-        case ReducerTypes.Load:
+        case ReducerTypes.Idle:
             return { ...state, pdf: action.data, images: null }
-        case ReducerTypes.Info:
-            return { ...state, info: action.data, step: ReducerTypes.Convert}
-        case ReducerTypes.Convert:
-            return { ...state, step: ReducerTypes.Convert }
-        case ReducerTypes.Converting:
-            return { ...state, step: ReducerTypes.Converting }
+        case ReducerTypes.Ready:
+            return { ...state, info: action.data, step: ReducerTypes.Ready}
+        case ReducerTypes.Loading:
+            return { ...state, step: ReducerTypes.Loading}
         case ReducerTypes.ImagesConverted:
-            return { ...state, images: action.data, step: ReducerTypes.ImagesConverted }
-        case ReducerTypes.Download:
-            return { ...state, step: ReducerTypes.Download }
-        case ReducerTypes.PressedDownload:
-            return { ...state, step: ReducerTypes.PressedDownload}
+            return { ...state, images: action.data.images, downloadRef: action.data.downloadRef, step: ReducerTypes.Download }
         case ReducerTypes.DocumentDimensions:
             return { ...state, dimensions: action.data}
         case ReducerTypes.O_Quality:
@@ -69,7 +62,7 @@ function reducer(state, action) {
             currOptions.theme = action.data
             return { ...state, options: currOptions }
         default: {
-            throw new Error(`Unhandled action type: ${action.type}`)
+            alert(`Tried doing ${action.type}`)
         }
 
     }
