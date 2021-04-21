@@ -19,6 +19,8 @@ export const Button = styled.button`
     font-weight: 600;
     line-height: 1.5rem;
     ${props => props.secondary && `background: ${disabled};`}
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
 `
 
 export const SidePanel = styled.div`
