@@ -56,13 +56,15 @@ const PreviewPanel = () => {
 
     const getDataURL = async e => {
         const index = e._pageIndex;
-        let resultImage = await invertImage(children[index]?.toDataURL(), children[index], state.options.theme.hueVal, state.options.theme.invertVal)
-        images[index] = resultImage;
-        if (images.length === numPages && images.every(function (i) { return i !== null }))
-        {
-            setCompletedImages(images)
+        // await invertImage(children[index]?.toDataURL(), children[index], state.options.theme.hueVal, state.options.theme.invertVal)
+        invertImage(children[index]?.toDataURL(), children[index], state.options.theme.hueVal, state.options.theme.invertVal).then(
+            e => {
+                images[index] = e;
+                if (images.length === numPages && images.every(function (i) { return i !== null })) {
+                    setCompletedImages(images)
+                }
             }
-            
+        )
     }
 
 

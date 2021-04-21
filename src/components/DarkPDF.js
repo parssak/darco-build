@@ -17,7 +17,6 @@ const DarkPDF = ({images, dimensions}) => {
                             <Page size={{ width: dimensions[0], height: dimensions[1]}} style={styles.page}>
                                 <Image src={e} />
                             </Page>
-
                         )
                     })
                 }

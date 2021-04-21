@@ -35,22 +35,22 @@ const Steps = () => {
 
     return (
         <div style={{marginTop: 'auto'}}>
-            <Step stepDiff={1 - state.step}>
-                <Download fill={1 - state.step < 0 ? success : primary} />
+            <Step finished={0 - state.step < 0}>
+                <Download fill={0 - state.step < 0 ? success : primary} />
                 <StepTextWrapper>
                     <StepTitle>Select</StepTitle>
                     <StepDescription>Choose from Files</StepDescription>
                 </StepTextWrapper>
             </Step>
-            <Step stepDiff={2 - state.step} loading={state.step === 3}>
-                <DarkMode fill={state.step === 3 ? loading : 2 - state.step < 0 ? success : primary} />
+            <Step finished={2 - state.step < 0} loading={state.step === 2}>
+                <DarkMode fill={2 - state.step < 0 ? success : state.step === 2 ? loading : primary}/>
                 <StepTextWrapper>
                     <StepTitle>Convert</StepTitle>
                     <StepDescription>Convert PDF to dark mode</StepDescription>
                 </StepTextWrapper>
             </Step>
-            <Step stepDiff={3 - state.step} >
-                <Share fill={3 - state.step < 0 ? success : primary} />
+            <Step  >
+                <Share fill={primary}/>
                 <StepTextWrapper>
                     <StepTitle>Download</StepTitle>
                     <StepDescription>Export PDF anywhere</StepDescription>
@@ -76,7 +76,8 @@ const Step = styled.div`
     & > * {
         margin-right: 1rem;
     }
-    ${props => props.loading ? `color: ${loading}` : props.stepDiff < 0 && `color: ${success}`}
+    ${props => props.loading && `color: ${loading};`}
+    ${props => props.finished && `color: ${success};`}
 `
 const StepTextWrapper = styled.div`
     display: flex;

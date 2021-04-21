@@ -39,13 +39,13 @@ const SettingsPanel = () => {
     
     const onFileChange = e => dispatch({ type: ReducerTypes.Idle, data: e.target.files[0] })
 
-    if (state.step > ReducerTypes.Converting)
+    if (state.step >= ReducerTypes.Loading)
         return (
             <SidePanel>
                 <DataSection >
                     <div className="h">
                         <DarkMode fill="white"/>
-                        <DataTitle bottomSpaced>{state.step === ReducerTypes.Converting ? "Converting PDF" : "Converted PDF 🎉"}</DataTitle>
+                        <DataTitle bottomSpaced>{state.step === ReducerTypes.Download ? "Converted PDF 🎉"   : "Converting PDF"}</DataTitle>
                     </div>
                 <DataSection>
                     <div className="h">
