@@ -1,11 +1,25 @@
-import PDFPreview from './components/PDFPreview';
-import PDFData from './components/PDFData';
-import LeftPanel from './components/LeftPanel';
+import PreviewPanel from './components/PreviewPanel';
+import SettingsPanel from './components/SettingsPanel';
+import StatusPanel from './components/StatusPanel';
 import styled from 'styled-components';
+import { Title } from './styles';
 
 const AppContainer = styled.div`
-display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-rows: 0.2fr 1.8fr;
+  gap: 0px 0px;
+  grid-template-areas:
+    "title preview settings"
+    "status preview settings";
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 0.3fr 1.6fr 1.1fr;
+    grid-template-areas:
+    "title title"
+    "preview settings"
+    "status status";
+  }
   padding: 5vw;
   height: 100vh;
   width: 100vw;
@@ -14,9 +28,10 @@ display: flex;
 function App() {
   return (
     <AppContainer>
-      <LeftPanel />
-      <PDFPreview />
-      <PDFData />
+      <Title>Darco</Title>
+      <StatusPanel />
+      <PreviewPanel />
+      <SettingsPanel />
     </AppContainer>
   );
 }

@@ -7,8 +7,7 @@ import { PDFDownloadLink } from '@react-pdf/renderer';
 import DarkPDF from './DarkPDF';
 
 const Preview = styled.div`
-    flex-basis: content;
-    flex-grow: 1;
+    grid-area: preview;
     display: flex;
     justify-content: center;
     position: relative;
@@ -22,7 +21,7 @@ const options = {
 let children = []
 let images = []
 
-const PDFPreview = () => {
+const PreviewPanel = () => {
     const { state, dispatch } = useDarco()
     const [numPages, setNumPages] = useState(0);
     const docRef = useRef(null);
@@ -107,4 +106,4 @@ const PDFPreview = () => {
     );
 }
 
-export default PDFPreview;
+export default PreviewPanel;

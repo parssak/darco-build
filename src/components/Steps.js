@@ -41,7 +41,7 @@ const Steps = () => {
     const onFileChange = e => dispatch({ type: ReducerTypes.Load, data: e.target.files[0] })
 
     return (
-        <>
+        <div style={{marginTop: 'auto'}}>
             <Step stepDiff={1 - state.step}>
                 <Download fill={1 - state.step < 0 ? success : primary} />
                 <StepTextWrapper>
@@ -65,7 +65,7 @@ const Steps = () => {
             </Step>
             <Button onClick={onButtonClick}>{buttonTexts[state.step]}</Button>
             <input type="file" accept="application/pdf" ref={inputFile} style={{ display: 'none' }} onChange={onFileChange} />
-        </>
+        </div>
     );
 }
 

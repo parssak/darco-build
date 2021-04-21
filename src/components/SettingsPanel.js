@@ -19,7 +19,10 @@ const DataSubTitle = styled.h4`
 const DataSection = styled.div`
     margin-bottom: 1.5rem;
 `
-const PDFData = () => {
+
+
+
+const SettingsPanel = () => {
     const inputFile = useRef(null)
     const { state, dispatch } = useDarco()
     
@@ -59,7 +62,7 @@ const PDFData = () => {
 
 
     return (
-        <SidePanel>
+        <SidePanel style={{ gridArea: `settings`}}>
             <DataSection>
                 <div className="h">
                     <DataTitle>{state.pdf.name}</DataTitle>
@@ -92,4 +95,4 @@ const PDFData = () => {
 }
 
 
-export default PDFData;
+export default SettingsPanel;

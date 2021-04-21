@@ -8,6 +8,7 @@ export const Title = styled.h1`
     letter-spacing: -0.04em;
     text-align: left;
     margin-bottom: auto;
+    grid-area: 'title';
 `
 export const Button = styled.button`
     all: unset;
