@@ -96,15 +96,25 @@ const PreviewPanel = ({width, height}) => {
                 inputRef={docRef}
             >
                 {
+                    width < 1000 ? 
                     <Page
                         key={`page_${0}`}
                         pageNumber={0 + 1}
                         // scale={0.8}
-                        height={width < 1000 ? height/2 : height}
+                        width={width/2}
                         className={[state.options.theme, 'page']}
                         onLoadSuccess={e => dispatch({ type: ReducerTypes.DocumentDimensions, data: [e.originalWidth, e.originalHeight] })}
                         renderAnnotationLayer={false}
-                    />
+                        />
+                        :
+                        <Page
+                            key={`page_${0}`}
+                            pageNumber={0 + 1}
+                            height={ height }
+                            className={[state.options.theme, 'page']}
+                            onLoadSuccess={e => dispatch({ type: ReducerTypes.DocumentDimensions, data: [e.originalWidth, e.originalHeight] })}
+                            renderAnnotationLayer={false}
+                        />
                 }
                 {
                     state.step === ReducerTypes.Loading &&

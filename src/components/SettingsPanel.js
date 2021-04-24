@@ -9,10 +9,10 @@ import LoadingBar from './LoadingBar'
 
 const SettingsPanelContainer = styled(SidePanel)`
     grid-area: settings;
-    @media (max-width: 1000px) {
+    /* @media (max-width: 1000px) {
         display: none;
         ${props => props.show && `display: initial;`}
-    }
+    } */
 `;
 
 const DataTitle = styled.h3`

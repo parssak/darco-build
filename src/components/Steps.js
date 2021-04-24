@@ -58,7 +58,6 @@ const Steps = () => {
             </Step>
             <ButtonWrapper>
                 <Button onClick={onButtonClick}>{buttonTexts[state.step]}</Button>
-                {/* <Button secondary onClick={onButtonClick}>New PDF</Button> */}
             </ButtonWrapper>
             <input type="file" accept="application/pdf" ref={inputFile} style={{ display: 'none' }} onChange={onFileChange} />
         </div>

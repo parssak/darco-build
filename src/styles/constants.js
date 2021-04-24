@@ -7,4 +7,4 @@ export const tertiary = 'rgba(118, 118, 128, 0.24)';
 export const accent = 'hsl(248, 84%, 60%)';
 export const success = 'hsl(129, 67%, 52%)';
 export const loading = 'rgba(255, 149, 0, 1)';
-
+export const gradient = `linear-gradient(249.32deg, #7328D2 7.45%, #5200FF 100%)`;

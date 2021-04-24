@@ -12,7 +12,7 @@ const ThemeOptionContainer = styled.div`
       border-radius: 8.91px;
       width: 50%;
       & > * {
-          height: 100%;
+          /* height: 100%; */
           padding: 1rem;
       };
       
@@ -32,7 +32,7 @@ const ThemeOption = ({ theme, selected, handleSelect }) => {
 const ThemePickerContainer = styled.div`
     display: flex;
     justify-content: space-between;
-    height: 100%;
+    /* height: 100%; */
     & > * {
         transition: all 0.3s ease;
     };

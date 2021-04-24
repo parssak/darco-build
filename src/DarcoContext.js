@@ -4,7 +4,8 @@ export const Quality = {
     high: 'high',
     low: 'low'
 }
-
+let ballAStandard = `translate(936.302 -59.7211) rotate(15.768) scale(798.116 506.722)`;
+let ballBStandard = `translate(936.302 -59.7211) rotate(15.768) scale(798.116 506.722)`;
 export const Theme = {
     grey: {
         name: 'space grey',
