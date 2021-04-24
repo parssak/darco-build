@@ -22,12 +22,14 @@ const options = {
 
 let children = []
 let images = []
+let texts= []
 
-const PreviewPanel = () => {
-    const { state, dispatch } = useDarco()
+const PreviewPanel = ({width, height}) => {
+    const { state, dispatch } = useDarco();
     const [numPages, setNumPages] = useState(0);
     const [completedImages, setCompletedImages] = useState([]);
     const [loadingStatus, setLoadingStatus] = useState(0);
+    
     /**
      * 
      */
@@ -84,11 +86,6 @@ const PreviewPanel = () => {
             }
         )
     }
-
-
-
-
-
     return (
         <Preview>
             <Document
@@ -102,40 +99,41 @@ const PreviewPanel = () => {
                     <Page
                         key={`page_${0}`}
                         pageNumber={0 + 1}
-                        scale={0.8}
+                        // scale={0.8}
+                        height={width < 1000 ? height/2 : height}
                         className={[state.options.theme, 'page']}
                         onLoadSuccess={e => dispatch({ type: ReducerTypes.DocumentDimensions, data: [e.originalWidth, e.originalHeight] })}
+                        renderAnnotationLayer={false}
                     />
                 }
                 {
                     state.step === ReducerTypes.Loading &&
                     Array.from(
                         new Array(numPages),
-                        (el, index) => (
+                        (_, index) => (
                             <Page
                                 key={`page_${index + 1}`}
                                 width={state.dimensions[0]}
                                 height={state.dimensions[1]}
                                 scale={2}
                                 pageNumber={index + 1}
-                                onGetTextSuccess={e => console.log("Got text:", e)}
+                                onGetTextSuccess={e => texts[index] = e}
                                 className={['hidden']}
                                 canvasRef={e => storeCanvasRef(e, index)}
                                 onRenderSuccess={e => getDataURL(e)}
 
                             />
-
                         ),
                     )
                 }
             </Document>
-            {
-                // state.completion >= 0 && <LoadingModal completion={state.completion}/>
+            {state.step === ReducerTypes.Loading && width < 1000 &&
+                <LoadingModal/>
             }
             {
                 completedImages.length > 0 &&
 
-                <PDFDownloadLink document={<DarkPDF images={completedImages} dimensions={state.dimensions} />} fileName={state.pdf.name}>
+                <PDFDownloadLink document={<DarkPDF images={completedImages} dimensions={state.dimensions} texts={texts}/>} fileName={state.pdf.name}>
                     {({ blob, url, loading, error }) =>
                         <button ref={downloadRef} style={{ display: 'none' }}>download</button>
                     }

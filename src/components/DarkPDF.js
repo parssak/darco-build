@@ -8,14 +8,17 @@ const styles = StyleSheet.create({
         backgroundColor: '#000000'
     }
 });
-const DarkPDF = ({images, dimensions}) => {
+const DarkPDF = ({images, dimensions, texts}) => {
     return (
             <Document onRender={e => console.log(e)} >
-                {
-                    images.map(e => {
+            {
+                images.map((e, index) => {
                         return (
                             <Page size={{ width: dimensions[0], height: dimensions[1]}} style={styles.page}>
                                 <Image src={e} />
+                                {/* {
+                                    texts[index]?.map(e => console.log(e))
+                                } */}
                             </Page>
                         )
                     })

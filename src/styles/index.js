@@ -9,6 +9,9 @@ export const Title = styled.h1`
     text-align: left;
     margin-bottom: auto;
     grid-area: 'title';
+    @media (max-width: 1000px) {
+        font-size: 3.5rem;
+    }
 `
 export const Button = styled.button`
     all: unset;

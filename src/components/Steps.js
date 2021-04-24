@@ -56,7 +56,10 @@ const Steps = () => {
                     <StepDescription>Export PDF anywhere</StepDescription>
                 </StepTextWrapper>
             </Step>
-            <Button onClick={onButtonClick}>{buttonTexts[state.step]}</Button>
+            <ButtonWrapper>
+                <Button onClick={onButtonClick}>{buttonTexts[state.step]}</Button>
+                {/* <Button secondary onClick={onButtonClick}>New PDF</Button> */}
+            </ButtonWrapper>
             <input type="file" accept="application/pdf" ref={inputFile} style={{ display: 'none' }} onChange={onFileChange} />
         </div>
     );
@@ -94,3 +97,12 @@ const StepDescription = styled.p`
     font-size: 1.2rem;
     letter-spacing: -0.04rem;
 `
+
+const ButtonWrapper = styled.div`
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    @media (max-width: 1000px) {
+        justify-content: center;
+    }
+`;

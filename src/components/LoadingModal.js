@@ -16,13 +16,10 @@ const ModalContainer = styled.div`
     justify-content: center;
     flex-direction: column;
 `;
-export default function LoadingModal({ completion }) {
+export default function LoadingModal() {
     return (
         <ModalContainer>
-            {/* <div style={{position: 'relative'}}> */}
-            {/* One Moment Please */}
             <FadeLoader/>
-            {/* </div> */}
         </ModalContainer>
     )
 }
