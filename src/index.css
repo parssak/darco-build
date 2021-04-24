@@ -93,3 +93,15 @@ h4 {
 .hidden {
   display: none;
 }
+
+svg {
+  /* transition: all 0.5s ease; */
+}
+
+.bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  user-select: none;
+}
