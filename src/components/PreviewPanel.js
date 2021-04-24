@@ -67,10 +67,10 @@ const PreviewPanel = () => {
         invertImage(children[index]?.toDataURL(), children[index], state.options.theme.hueVal, state.options.theme.invertVal).then(
             e => {
                 images[index] = e;
+                setLoadingStatus(loadingStatus => loadingStatus + 1)
                 if (images.length === numPages && images.every(function (i) { return i !== null })) {
                     setCompletedImages(images)
                 }
-                setLoadingStatus(loadingStatus => loadingStatus + 1)
             }
         )
     }
@@ -120,7 +120,7 @@ const PreviewPanel = () => {
                 }
             </Document>
             {
-                <LoadingModal completion={state.completion}/>
+                // state.completion >= 0 && <LoadingModal completion={state.completion}/>
             }
             {
                 completedImages.length > 0 &&

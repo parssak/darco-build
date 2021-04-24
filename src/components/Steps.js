@@ -42,7 +42,7 @@ const Steps = () => {
                     <StepDescription>Choose from Files</StepDescription>
                 </StepTextWrapper>
             </Step>
-            <Step finished={2 - state.step < 0} loading={state.step === 2}>
+            <Step finished={2 - state.step < 0} loading={state.step === 2 ? "true" : "false"}>
                 <DarkMode fill={2 - state.step < 0 ? success : state.step === 2 ? loading : primary}/>
                 <StepTextWrapper>
                     <StepTitle>Convert</StepTitle>
@@ -76,8 +76,8 @@ const Step = styled.div`
     & > * {
         margin-right: 1rem;
     }
-    ${props => props.loading && `color: ${loading};`}
-    ${props => props.finished && `color: ${success};`}
+    /* ${props => props.loading && `color: ${loading};`} */
+    /* ${props => props.finished && `color: ${success};`} */
 `
 const StepTextWrapper = styled.div`
     display: flex;

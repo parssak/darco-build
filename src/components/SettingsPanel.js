@@ -5,6 +5,7 @@ import { Button, SidePanel } from '../styles'
 import SegmentedPicker from './SegmentedPicker';
 import ThemePicker from './ThemePicker';
 import { ReactComponent as DarkMode } from '../svgs/darkmode.svg';
+import LoadingBar from './LoadingBar'
 
 const SettingsPanelContainer = styled(SidePanel)`
     grid-area: settings;
@@ -17,6 +18,9 @@ const SettingsPanelContainer = styled(SidePanel)`
 const DataTitle = styled.h3`
     font-size: 1.4rem;
     letter-spacing: -0.01rem;
+    max-width: 15ch;
+    overflow: hidden;
+    text-overflow: ellipsis;
     ${props => props.bottomSpaced && `margin-bottom: 0.5rem;`}
 `
 const DataSubTitle = styled.h4`
@@ -29,21 +33,21 @@ const DataSection = styled.div`
 const SettingsPanel = () => {
     const inputFile = useRef(null)
     const { state, dispatch } = useDarco()
-    
+
     const options = ['High', 'Low'];
     if (!state.info)
         return null
-    
+
     const updateTheme = e => {
         if (state.options.theme !== e)
-            dispatch({type: ReducerTypes.O_Theme, data: e})
+            dispatch({ type: ReducerTypes.O_Theme, data: e })
     }
 
     const updateQuality = e => {
         if (state.options.quality !== e)
             dispatch({ type: ReducerTypes.O_Quality, data: e })
     }
-    
+
     const onFileChange = e => dispatch({ type: ReducerTypes.Idle, data: e.target.files[0] })
 
     if (state.step >= ReducerTypes.Loading)
@@ -51,16 +55,17 @@ const SettingsPanel = () => {
             <SettingsPanelContainer>
                 <DataSection >
                     <div className="h">
-                        <DarkMode fill="white"/>
-                        <DataTitle bottomSpaced>{state.step === ReducerTypes.Download ? "Converted PDF 🎉"   : "Converting PDF"}</DataTitle>
+                        <DarkMode fill="white" />
+                        <DataTitle bottomSpaced>{state.step === ReducerTypes.Download ? "Converted PDF 🎉" : "Converting PDF"}</DataTitle>
                     </div>
-                <DataSection>
-                    <div className="h">
-                        <DataTitle>{state.pdf.name}</DataTitle>
-                        <h3>{Math.round(state.pdf.size / 1024)} Kb</h3>
-                    </div>
+                    <DataSection>
+                        <div className="h">
+                            <DataTitle>{state.pdf.name}</DataTitle>
+                            <h3>{Math.round(state.pdf.size / 1024)} Kb</h3>
+                        </div>
+                    </DataSection>
                 </DataSection>
-                </DataSection>
+                <LoadingBar completion={state.completion}/>
             </SettingsPanelContainer>
         )
 
@@ -86,13 +91,13 @@ const SettingsPanel = () => {
                     onSelectionChange={updateQuality}
                 />
             </DataSection>
-            <DataSection style={{height: '33%'}}>
+            <DataSection style={{ height: '33%' }}>
                 <div className="h">
                     <DataTitle bottomSpaced>Theme</DataTitle>
                 </div>
-                <ThemePicker onSelectionChange={updateTheme}/>
+                <ThemePicker onSelectionChange={updateTheme} />
             </DataSection>
-            <Button secondary onClick={() => inputFile.current.click()} style={{ marginTop: 'auto'}}>Select New File</Button>
+            <Button secondary onClick={() => inputFile.current.click()} style={{ marginTop: 'auto' }}>Select New File</Button>
             <input type="file" accept="application/pdf" ref={inputFile} style={{ display: 'none' }} onChange={onFileChange} />
         </SettingsPanelContainer>
     )

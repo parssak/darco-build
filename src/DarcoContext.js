@@ -54,7 +54,7 @@ function reducer(state, action) {
         case ReducerTypes.Loading:
             return { ...state, step: ReducerTypes.Loading}
         case ReducerTypes.ImagesConverted:
-            return { ...state, images: action.data.images, downloadRef: action.data.downloadRef, step: ReducerTypes.Download }
+            return { ...state, images: action.data.images, downloadRef: action.data.downloadRef, step: ReducerTypes.Download, completion: 1 }
         case ReducerTypes.DocumentDimensions:
             return { ...state, dimensions: action.data }
         case ReducerTypes.Progress:
