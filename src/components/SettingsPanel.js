@@ -54,18 +54,19 @@ const SettingsPanel = () => {
         return (
             <SettingsPanelContainer>
                 <DataSection >
+                    <DataSection>
+                        <div className="h">
+                            <DataTitle style={{maxWidth: `25ch`}}>{state.pdf.name}</DataTitle>
+                        </div>
+                    </DataSection>
                     <div className="h">
                         <DarkMode fill="white" />
                         <DataTitle bottomSpaced>{state.step === ReducerTypes.Download ? "Converted PDF 🎉" : "Converting PDF"}</DataTitle>
                     </div>
-                    <DataSection>
-                        <div className="h">
-                            <DataTitle>{state.pdf.name}</DataTitle>
-                            <h3>{Math.round(state.pdf.size / 1024)} Kb</h3>
-                        </div>
-                    </DataSection>
                 </DataSection>
-                <LoadingBar completion={state.completion}/>
+                {state.step !== ReducerTypes.Download && <LoadingBar completion={state.completion} />}
+                <Button secondary onClick={() => inputFile.current.click()} style={{ marginTop: 'auto' }}>Select New File</Button>
+                <input type="file" accept="application/pdf" ref={inputFile} style={{ display: 'none' }} onChange={onFileChange} />
             </SettingsPanelContainer>
         )
 

@@ -50,7 +50,7 @@ function reducer(state, action) {
         case ReducerTypes.Idle:
             return { ...state, pdf: action.data, images: null }
         case ReducerTypes.Ready:
-            return { ...state, info: action.data, step: ReducerTypes.Ready}
+            return { ...state, info: action.data, step: ReducerTypes.Ready, completion: 0}
         case ReducerTypes.Loading:
             return { ...state, step: ReducerTypes.Loading}
         case ReducerTypes.ImagesConverted:
@@ -58,7 +58,7 @@ function reducer(state, action) {
         case ReducerTypes.DocumentDimensions:
             return { ...state, dimensions: action.data }
         case ReducerTypes.Progress:
-            return { ...state, completion: action.data }
+            return { ...state, completion: (state.progress !== 1) ? action.data : 1 }
         case ReducerTypes.O_Quality:
             currOptions.quality = action.data
             return { ...state, options: currOptions }

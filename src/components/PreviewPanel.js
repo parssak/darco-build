@@ -36,12 +36,13 @@ const PreviewPanel = () => {
 
     function onDocumentLoadSuccess(pdf) {
         setNumPages(pdf._pdfInfo.numPages);
+        console.log("Got new pdf with pages: ", pdf._pdfInfo.numPages);
         dispatch({ type: ReducerTypes.Ready, data: pdf._pdfInfo })
     }
 
     useEffect(() => {
         if (completedImages.length > 0 && downloadRef.current !== null) {
-            console.log(completedImages)
+            console.log("Completed Images:", completedImages)
             dispatch({
                 type: ReducerTypes.ImagesConverted, data: {
                     images: images,
@@ -49,17 +50,26 @@ const PreviewPanel = () => {
                 }
             })
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [completedImages, downloadRef]);
 
     useEffect(() => {
-        dispatch({type: ReducerTypes.Progress, data: loadingStatus / numPages})
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        dispatch({ type: ReducerTypes.Progress, data: loadingStatus / numPages })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [loadingStatus]);
-    
+
+    useEffect(() => {
+        if (state.step <= ReducerTypes.Ready && completedImages.length > 0) {
+            console.log("removing all completed images...")
+            setCompletedImages([])
+            children = []
+            images = []
+        }
+    }, [completedImages.length, state]);
+
     if (state.pdf === null)
         return null
-    
+
     const storeCanvasRef = (canvasEl, index) => children[index] = canvasEl
 
     const getDataURL = async e => {
@@ -108,7 +118,7 @@ const PreviewPanel = () => {
                                 height={state.dimensions[1]}
                                 scale={2}
                                 pageNumber={index + 1}
-                                onGetTextSuccess={e => console.log(e)}
+                                onGetTextSuccess={e => console.log("Got text:", e)}
                                 className={['hidden']}
                                 canvasRef={e => storeCanvasRef(e, index)}
                                 onRenderSuccess={e => getDataURL(e)}

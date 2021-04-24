@@ -13,15 +13,14 @@ const LoadingBarWrapper = styled.div`
 
 const LoadingBarInner = styled.div`
     transition: all 0.5s ease;
-     -webkit-transition: width 1.5s ease;
-        -o-transition: width 1.5 ease;
     width: ${props => props.completion}%;
-    /* width: 100%; */
     height: 100%;
     position: absolute;
     left: 0;
     top: 0;
-    background-color: linear-gradient(89.93deg, #5200FF -13.49%, #7328D2 55.98%);
+    background: linear-gradient(249.32deg, #7328D2 7.45%, #5200FF 100%);
+    border-radius: 5rem;
+
 `
 export default function LoadingBar({ completion }) {
     return (
