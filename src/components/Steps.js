@@ -8,7 +8,7 @@ import { ReactComponent as Share } from '../svgs/share.svg';
 import { primary, success, loading } from '../styles/constants';
 import { ReducerTypes, useDarco } from '../DarcoContext';
 
-const buttonTexts = ["Idle", "Ready", "Loading", "Download"]
+const buttonTexts = ["Select PDF", "Convert", "Loading", "Download"]
 
 const Steps = () => {
     const { state, dispatch } = useDarco()

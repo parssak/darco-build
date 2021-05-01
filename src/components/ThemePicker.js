@@ -32,18 +32,16 @@ const ThemeOption = ({ theme, selected, handleSelect }) => {
 const ThemePickerContainer = styled.div`
     display: flex;
     justify-content: space-between;
-    /* height: 100%; */
     & > * {
         transition: all 0.3s ease;
     };
 `;
 
-const ThemePicker = ({onSelectionChange = e => { }}) => {
+const ThemePicker = ({onSelectionChange}) => {
     const [selected, setSelected] = useState(Object.keys(Theme)[0]);
     
     useEffect(() => {
         onSelectionChange(selected)
-        
     }, [onSelectionChange, selected])
     return (
         <ThemePickerContainer>

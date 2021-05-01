@@ -4,20 +4,21 @@ export const Quality = {
     high: 'high',
     low: 'low'
 }
-let ballAStandard = `translate(936.302 -59.7211) rotate(15.768) scale(798.116 506.722)`;
-let ballBStandard = `translate(936.302 -59.7211) rotate(15.768) scale(798.116 506.722)`;
+
 export const Theme = {
     grey: {
         name: 'space grey',
         convert: 'invert(0.8) contrast(1.2) hue-rotate(135rad)',
-        invertVal: 0.8,
-        hueVal: 0.3
+        contrast: 1.2,
+        invert: 0.8,
+        hueRotate: 0.4,
     },
     classic: {
         name: 'classic',
         convert: 'invert(1)',
-        invertVal: 1,
-        hueVal: 0.5
+        contrast: 1,
+        invert: 1,
+        hueRotate: 0.3,
     },
 }
 
@@ -46,6 +47,7 @@ export const ReducerTypes = {
     DocumentDimensions: 'dimensions'
 }
 function reducer(state, action) {
+    console.log('state change', state)
     let currOptions = state.options;
     switch (action.type) {
         case ReducerTypes.Idle:

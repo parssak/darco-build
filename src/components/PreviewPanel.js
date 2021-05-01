@@ -76,7 +76,8 @@ const PreviewPanel = ({width, height}) => {
 
     const getDataURL = async e => {
         const index = e._pageIndex;
-        invertImage(children[index]?.toDataURL(), children[index], state.options.theme.hueVal, state.options.theme.invertVal).then(
+        console.log(state.options)
+        invertImage(children[index]?.toDataURL(), children[index], state.options.theme).then(
             e => {
                 images[index] = e;
                 setLoadingStatus(loadingStatus => loadingStatus + 1)
