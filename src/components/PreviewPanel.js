@@ -6,8 +6,60 @@ import invertImage from '../helpers/invertImage';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import DarkPDF from './DarkPDF';
 import LoadingModal from './LoadingModal'
+import jsPDF from 'jspdf';
 
 
+/**
+ *  Takes all of the inverted images and returns them back into a pdf
+ * @param imageArray: array of inverted images
+ * @param orientation: 'p' for portrait, 'l' for landscape
+ */
+async function imagesToPDF(imageArray, orientation, data) {
+    console.log("got >>", imageArray, data);
+    return new Promise(resolve => {
+        let doc = new jsPDF(orientation, 'mm');
+        for (let i = 0; i < data.info.numPages; i++) {
+            doc.addPage();
+        }
+        let finishedPages = 0;
+        
+        // while (finishedPages < data.info.numPages) {
+            
+        // }
+        for (let i = 0; i < imageArray.length; i++) {
+            // if (i !== imageArray.length - 1) doc.addPage();
+            doc.setPage(i + 1);
+            const imgData = imageArray[i];
+            const width = doc.internal.pageSize.getWidth();
+            const height = doc.internal.pageSize.getHeight();
+            // const width = 
+            // const height = 
+
+            doc.setFillColor('#000000');
+            doc.rect(0, 0, width, height);
+            console.log('building page >> ',i, imgData?.byteData, width, height);
+            if (imgData)
+                doc.addImage(imgData, 0, 0, width, height);
+        }
+        let documentName = 'cool-doc.pdf';
+
+        if (window.webkit) {
+            window.webkit.messageHandlers.getDocumentName.postMessage(documentName.concat(".pdf"))
+        }
+
+        let fileReader = new FileReader()
+        let base64;
+        let blobPDF = new Blob([doc.output('blob')], { type: 'application/pdf' });
+        fileReader.readAsDataURL(blobPDF);
+        fileReader.onload = function (fileLoadedEvent) {
+            base64 = fileLoadedEvent.target.result;
+            resolve(base64);
+            if (!window.webkit)
+                doc.save(documentName.concat(".pdf"));
+        }
+
+    });
+}
 const Preview = styled.div`
     grid-area: preview;
     display: flex;
@@ -28,11 +80,8 @@ const PreviewPanel = ({width, height}) => {
     const { state, dispatch } = useDarco();
     const [numPages, setNumPages] = useState(0);
     const [completedImages, setCompletedImages] = useState([]);
-    // const [loadingStatus, setLoadingStatus] = useState(0);
-    
-    /**
-     * 
-     */
+    const [isBuilding, setIsBuilding] = useState(false);
+
     const docRef = useRef(null);
     const downloadRef = useRef(null);
 
@@ -41,34 +90,49 @@ const PreviewPanel = ({width, height}) => {
         dispatch({ type: ReducerTypes.Ready, data: pdf._pdfInfo })
     }
 
-    // useEffect(() => {
-    //     dispatch({ type: ReducerTypes.Progress, data: loadingStatus / numPages })
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [loadingStatus]);
-
     useEffect(() => {
         if (state.step <= ReducerTypes.Ready && completedImages.length > 0) {
             setCompletedImages([])
             children = []
             images = []
-            currentBlobSize = 0;
+            setIsBuilding(false)
         }
-    }, [completedImages.length, state]);
+    }, [completedImages, state]);
+
+    // useEffect(() => {
+    //     async function handleConvert() {
+    //         console.log("called handle convert...")
+    //         const finalBase64 = await imagesToPDF(completedImages, 'p', state);
+    //         console.log("converted!!", finalBase64)
+    //     }
+
+    //     if (completedImages.length === numPages && completedImages.length > 0 && !isBuilding) {
+    //         console.log("about to start building...")
+    //         // BUILD
+    //         handleConvert();
+    //         setIsBuilding(true);
+    //     }
+    // }, [completedImages]);
 
     if (state.pdf === null)
         return null
 
     const storeCanvasRef = (canvasEl, index) => children[index] = canvasEl
-
+    
+    async function handleConvert() {
+        console.log("called handle convert...")
+        const finalBase64 = await imagesToPDF(images, 'p', state);
+        console.log("converted!!", finalBase64)
+    }
+    
     const getDataURL = async e => {
         const index = e._pageIndex;
         invertImage(children[index]?.toDataURL(), children[index], state.options.theme).then(
             e => {
                 images[index] = e;
-                // setLoadingStatus(loadingStatus => loadingStatus + 1)
                 if (images.length === numPages && images.every(function (i) { return i !== null })) {
-                    // setIsBuilding(true)
-                    setCompletedImages(images)
+                    console.log("about to start building...")
+                    handleConvert();
                 }
             }
         )
@@ -126,7 +190,7 @@ const PreviewPanel = ({width, height}) => {
             {((state.step === ReducerTypes.Loading && width < 1000)) &&
                 <LoadingModal/>
             }
-            {
+            {/* {
                 completedImages.length === numPages && completedImages.length > 0 &&
 
                 <PDFDownloadLink document={<DarkPDF images={completedImages} dimensions={state.dimensions} texts={texts}/>} fileName={state.pdf.name}>
@@ -153,7 +217,7 @@ const PreviewPanel = ({width, height}) => {
             }
             {
                 
-            }
+            } */}
         </Preview>
     );
 }
