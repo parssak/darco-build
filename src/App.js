@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import { Title } from './styles';
 import React, { useRef } from 'react';
 import useResizeObserver from '@react-hook/resize-observer';
-import { useDarco } from './DarcoContext';
 
 const AppContainer = styled.div`
   display: grid;
@@ -44,7 +43,6 @@ const useSize = (target) => {
 
 
 function App() {
-  const {state} = useDarco()
   const target = useRef(null)
   const size = useSize(target)
 

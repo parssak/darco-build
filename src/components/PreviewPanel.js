@@ -29,6 +29,7 @@ const PreviewPanel = ({width, height}) => {
     const [numPages, setNumPages] = useState(0);
     const [completedImages, setCompletedImages] = useState([]);
     const [loadingStatus, setLoadingStatus] = useState(0);
+    const [isBuilding, setIsBuilding] = useState(false);
     
     /**
      * 
@@ -43,7 +44,7 @@ const PreviewPanel = ({width, height}) => {
     }
 
     useEffect(() => {
-        if (completedImages.length > 0 && downloadRef.current !== null) {
+        if (completedImages.length === numPages && downloadRef.current !== null) {
             console.log("Completed Images:", completedImages)
             dispatch({
                 type: ReducerTypes.ImagesConverted, data: {
@@ -62,10 +63,10 @@ const PreviewPanel = ({width, height}) => {
 
     useEffect(() => {
         if (state.step <= ReducerTypes.Ready && completedImages.length > 0) {
-            console.log("removing all completed images...")
             setCompletedImages([])
             children = []
             images = []
+            setIsBuilding(false);
         }
     }, [completedImages.length, state]);
 
@@ -138,15 +139,17 @@ const PreviewPanel = ({width, height}) => {
                     )
                 }
             </Document>
-            {state.step === ReducerTypes.Loading && width < 1000 &&
+            {(isBuilding || (state.step === ReducerTypes.Loading && width < 1000)) &&
                 <LoadingModal/>
             }
             {
-                completedImages.length > 0 &&
+                completedImages.length === numPages && completedImages.length > 0 &&
 
                 <PDFDownloadLink document={<DarkPDF images={completedImages} dimensions={state.dimensions} texts={texts}/>} fileName={state.pdf.name}>
-                    {({ blob, url, loading, error }) =>
-                        <button ref={downloadRef} style={{ display: 'none' }}>download</button>
+                    {({ blob, url, loading, error }) => {
+                        console.log(loading)
+                        return <button ref={downloadRef} style={{ display: 'none' }}>download</button>
+                    }
                     }
                 </PDFDownloadLink>
             }
