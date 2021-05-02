@@ -28,7 +28,7 @@ const PreviewPanel = ({width, height}) => {
     const { state, dispatch } = useDarco();
     const [numPages, setNumPages] = useState(0);
     const [completedImages, setCompletedImages] = useState([]);
-    const [loadingStatus, setLoadingStatus] = useState(0);
+    // const [loadingStatus, setLoadingStatus] = useState(0);
     
     /**
      * 
@@ -41,10 +41,10 @@ const PreviewPanel = ({width, height}) => {
         dispatch({ type: ReducerTypes.Ready, data: pdf._pdfInfo })
     }
 
-    useEffect(() => {
-        dispatch({ type: ReducerTypes.Progress, data: loadingStatus / numPages })
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [loadingStatus]);
+    // useEffect(() => {
+    //     dispatch({ type: ReducerTypes.Progress, data: loadingStatus / numPages })
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [loadingStatus]);
 
     useEffect(() => {
         if (state.step <= ReducerTypes.Ready && completedImages.length > 0) {
@@ -87,7 +87,6 @@ const PreviewPanel = ({width, height}) => {
                     <Page
                         key={`page_${0}`}
                         pageNumber={0 + 1}
-                        // scale={0.8}
                         width={width/2}
                         className={[state.options.theme, 'page']}
                         onLoadSuccess={e => dispatch({ type: ReducerTypes.DocumentDimensions, data: [e.originalWidth, e.originalHeight] })}

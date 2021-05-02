@@ -46,7 +46,8 @@ const useSize = (target) => {
 function App() {
   const target = useRef(null)
   const size = useSize(target)
-  const { state, dispatch } = useDarco()
+  // eslint-disable-next-line no-unused-vars
+  const { _, dispatch } = useDarco()
 
   window.recieveDataFromSwift = data => {
     alert("recieved pdf from swift!");

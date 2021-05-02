@@ -23,7 +23,6 @@ const LoadingBarInner = styled.div`
     border-radius: 5rem;
 
 `
-
 export default function LoadingBar() {
     return (
         <>
