@@ -32,19 +32,18 @@ const Steps = () => {
     }
     
     const handleDownload = () => {
-        if (state.info.numPages === 1) {
+        if (state.info.numPages <= 3) {
             state.downloadRef.click()
             return;
         }
         
         setTimeout(() => {
-            console.log('>>> - ', Date.now() - state.downloadTime)
-            if (Date.now() - state.downloadTime > 3000) {
+            if (Date.now() - state.downloadTime > 5000) {
                 state.downloadRef.click()
             } else {
                 handleDownload()
             }
-        }, 3000)
+        }, 5000)
     }
     
     const onFileChange = e => dispatch({ type: ReducerTypes.Idle, data: e.target.files[0] })

@@ -10,13 +10,12 @@ const styles = StyleSheet.create({
 });
 const DarkPDF = ({images, dimensions, texts}) => {
     return (
-            <Document onRender={e => console.log(e)} >
+            <Document>
             {
                 images.map((e, index) => {
                         return (
                             <Page size={{ width: dimensions[0], height: dimensions[1]}} style={styles.page} key={uuidv4()}>
                                 <Image src={e} />
-                                {console.log("page made", index)}
                             </Page>
                         )
                     })

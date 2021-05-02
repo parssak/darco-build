@@ -62,7 +62,6 @@ const PreviewPanel = ({width, height}) => {
 
     const getDataURL = async e => {
         const index = e._pageIndex;
-        console.log(state.options)
         invertImage(children[index]?.toDataURL(), children[index], state.options.theme).then(
             e => {
                 images[index] = e;
@@ -74,7 +73,6 @@ const PreviewPanel = ({width, height}) => {
             }
         )
     }
-    console.log("RERENDER")
     return (
         <Preview>
             <Document
@@ -137,12 +135,15 @@ const PreviewPanel = ({width, height}) => {
                         if (blob && !loading) {
                             if (state.step !== ReducerTypes.Download || blob.size > currentBlobSize) {
                                 currentBlobSize = blob.size;
-                                dispatch({
-                                    type: ReducerTypes.ImagesConverted, data: {
-                                        images: images,
-                                        downloadRef: downloadRef.current
-                                    }
-                                })
+                                setTimeout(() => {
+                                    dispatch({
+                                        type: ReducerTypes.ImagesConverted, data: {
+                                            images: images,
+                                            downloadRef: downloadRef.current
+                                        }
+                                    })
+                                }, 2000)
+                                
                             }
                             
                         }

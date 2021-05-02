@@ -47,7 +47,6 @@ export const ReducerTypes = {
     DocumentDimensions: 'dimensions'
 }
 function reducer(state, action) {
-    console.log('state change', state)
     let currOptions = state.options;
     switch (action.type) {
         case ReducerTypes.Idle:

@@ -64,7 +64,7 @@ const SettingsPanel = () => {
                         <DataTitle bottomSpaced>{state.step === ReducerTypes.Download ? "Converted PDF 🎉" : "Converting PDF"}</DataTitle>
                     </div>
                 </DataSection>
-                {state.step !== ReducerTypes.Download && <LoadingBar completion={state.completion} />}
+                {state.step !== ReducerTypes.Download && <LoadingBar/>}
                 <Button secondary onClick={() => inputFile.current.click()} style={{ marginTop: 'auto' }}>Select New File</Button>
                 <input type="file" accept="application/pdf" ref={inputFile} style={{ display: 'none' }} onChange={onFileChange} />
             </SettingsPanelContainer>

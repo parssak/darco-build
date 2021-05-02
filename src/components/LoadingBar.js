@@ -23,13 +23,14 @@ const LoadingBarInner = styled.div`
     border-radius: 5rem;
 
 `
-export default function LoadingBar({ completion }) {
+
+export default function LoadingBar() {
     return (
         <>
-            <p><strong>{Math.ceil(completion * 100)}%</strong></p>
+            <p><strong>One moment please...</strong></p>
             <br/>
             <LoadingBarWrapper>
-                <LoadingBarInner completion={isNaN(completion) ? 5 : Math.ceil(completion * 100)} />
+                <LoadingBarInner completion={100} />
             </LoadingBarWrapper>
         </>
     )
