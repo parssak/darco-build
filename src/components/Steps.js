@@ -23,14 +23,30 @@ const Steps = () => {
                 dispatch({ type: ReducerTypes.Loading });
                 break;
             case ReducerTypes.Download:
-                state.downloadRef.click()
+                handleDownload();
                 break;
             default:
                 break;
         }
 
     }
-
+    
+    const handleDownload = () => {
+        if (state.info.numPages === 1) {
+            state.downloadRef.click()
+            return;
+        }
+        
+        setTimeout(() => {
+            console.log('>>> - ', Date.now() - state.downloadTime)
+            if (Date.now() - state.downloadTime > 3000) {
+                state.downloadRef.click()
+            } else {
+                handleDownload()
+            }
+        }, 3000)
+    }
+    
     const onFileChange = e => dispatch({ type: ReducerTypes.Idle, data: e.target.files[0] })
 
     return (
@@ -67,7 +83,6 @@ const Steps = () => {
 export default Steps;
 
 // Styling
-
 const Step = styled.div`
     display: flex;
     flex-direction: row;

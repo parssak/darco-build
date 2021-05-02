@@ -14,7 +14,7 @@ const Preview = styled.div`
     justify-content: center;
     position: relative;
 `
-
+let currentBlobSize = 0;
 const options = {
     cMapUrl: 'cmaps/',
     cMapPacked: true,
@@ -29,7 +29,6 @@ const PreviewPanel = ({width, height}) => {
     const [numPages, setNumPages] = useState(0);
     const [completedImages, setCompletedImages] = useState([]);
     const [loadingStatus, setLoadingStatus] = useState(0);
-    const [isBuilding, setIsBuilding] = useState(false);
     
     /**
      * 
@@ -39,22 +38,8 @@ const PreviewPanel = ({width, height}) => {
 
     function onDocumentLoadSuccess(pdf) {
         setNumPages(pdf._pdfInfo.numPages);
-        console.log("Got new pdf with pages: ", pdf._pdfInfo.numPages);
         dispatch({ type: ReducerTypes.Ready, data: pdf._pdfInfo })
     }
-
-    useEffect(() => {
-        if (completedImages.length === numPages && downloadRef.current !== null) {
-            console.log("Completed Images:", completedImages)
-            dispatch({
-                type: ReducerTypes.ImagesConverted, data: {
-                    images: images,
-                    downloadRef: downloadRef.current
-                }
-            })
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [completedImages, downloadRef]);
 
     useEffect(() => {
         dispatch({ type: ReducerTypes.Progress, data: loadingStatus / numPages })
@@ -66,7 +51,7 @@ const PreviewPanel = ({width, height}) => {
             setCompletedImages([])
             children = []
             images = []
-            setIsBuilding(false);
+            currentBlobSize = 0;
         }
     }, [completedImages.length, state]);
 
@@ -81,13 +66,15 @@ const PreviewPanel = ({width, height}) => {
         invertImage(children[index]?.toDataURL(), children[index], state.options.theme).then(
             e => {
                 images[index] = e;
-                setLoadingStatus(loadingStatus => loadingStatus + 1)
+                // setLoadingStatus(loadingStatus => loadingStatus + 1)
                 if (images.length === numPages && images.every(function (i) { return i !== null })) {
+                    // setIsBuilding(true)
                     setCompletedImages(images)
                 }
             }
         )
     }
+    console.log("RERENDER")
     return (
         <Preview>
             <Document
@@ -139,7 +126,7 @@ const PreviewPanel = ({width, height}) => {
                     )
                 }
             </Document>
-            {(isBuilding || (state.step === ReducerTypes.Loading && width < 1000)) &&
+            {((state.step === ReducerTypes.Loading && width < 1000)) &&
                 <LoadingModal/>
             }
             {
@@ -147,11 +134,25 @@ const PreviewPanel = ({width, height}) => {
 
                 <PDFDownloadLink document={<DarkPDF images={completedImages} dimensions={state.dimensions} texts={texts}/>} fileName={state.pdf.name}>
                     {({ blob, url, loading, error }) => {
-                        console.log(loading)
-                        return <button ref={downloadRef} style={{ display: 'none' }}>download</button>
+                        if (blob && !loading) {
+                            if (state.step !== ReducerTypes.Download || blob.size > currentBlobSize) {
+                                currentBlobSize = blob.size;
+                                dispatch({
+                                    type: ReducerTypes.ImagesConverted, data: {
+                                        images: images,
+                                        downloadRef: downloadRef.current
+                                    }
+                                })
+                            }
+                            
+                        }
+                        return <button ref={downloadRef} style={{ display: 'none' }} >Download</button>
                     }
                     }
                 </PDFDownloadLink>
+            }
+            {
+                
             }
         </Preview>
     );

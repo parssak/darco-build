@@ -16,12 +16,7 @@ const DarkPDF = ({images, dimensions, texts}) => {
                         return (
                             <Page size={{ width: dimensions[0], height: dimensions[1]}} style={styles.page} key={uuidv4()}>
                                 <Image src={e} />
-                                {/* {
-                                    texts[index]?.map(e => console.log(e))
-                                } */}
-                                {
-                                    console.log("making page!", index)
-                                }
+                                {console.log("page made", index)}
                             </Page>
                         )
                     })
