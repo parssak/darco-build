@@ -87,7 +87,7 @@ h4 {
 }
 
 .classic {
-  filter: invert(1);
+  filter: invert(1) hue-rotate(84.5rad) contrast(1);
 }
 
 .hidden {

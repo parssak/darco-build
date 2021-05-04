@@ -4,7 +4,8 @@
 
 import { Theme } from "../DarcoContext";
 
-export default async function invertImage(imageURL, canvas, theme) {
+export default async function invertImage(imageURL, canvas, theme, quality = 0.7) {
+    console.log('got quality', quality)
     return new Promise((resolve, reject) => {
         let img = new Image();
         img.crossOrigin = "";
@@ -101,7 +102,7 @@ export default async function invertImage(imageURL, canvas, theme) {
             }
            
             ctx.putImageData(imageData, 0, 0);
-            resolve(canvas.toDataURL());
+            resolve(canvas.toDataURL('image/jpeg', quality));
         }
     })
 }

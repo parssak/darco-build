@@ -29,7 +29,6 @@ const AppContainer = styled.div`
   /* background-color: white; */
 `;
 
-
 const useSize = (target) => {
   const [size, setSize] = React.useState()
 

@@ -1,13 +1,13 @@
 import React from 'react';
 
 export const Quality = {
-    high: 'high',
-    low: 'low'
+    high: 0.7,
+    low: 0.5
 }
 
 export const Theme = {
     grey: {
-        name: 'space grey',
+        name: 'slate',
         convert: 'invert(0.8) contrast(1.2) hue-rotate(135rad)',
         contrast: 1.2,
         invert: 0.8,
@@ -15,10 +15,10 @@ export const Theme = {
     },
     classic: {
         name: 'classic',
-        convert: 'invert(1)',
+        convert: 'invert(1) hue-rotate(125rad)',
         contrast: 1,
         invert: 1,
-        hueRotate: 0.3,
+        hueRotate: 0.5,
     },
 }
 
@@ -27,7 +27,6 @@ const defaultState = {
     step: 0,
     info: null,
     images: null,
-    downloadRef: null,
     completion: 0,
     dimensions: [],
     options: {
@@ -56,7 +55,7 @@ function reducer(state, action) {
         case ReducerTypes.Loading:
             return { ...state, step: ReducerTypes.Loading}
         case ReducerTypes.ImagesConverted:
-            return { ...state, images: action.data.images, downloadRef: action.data.downloadRef, step: ReducerTypes.Download, completion: 1, downloadTime: Date.now() }
+            return { ...state, images: action.images, step: ReducerTypes.Download }
         case ReducerTypes.DocumentDimensions:
             return { ...state, dimensions: action.data }
         case ReducerTypes.Progress:

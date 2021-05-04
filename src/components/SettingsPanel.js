@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
-import { useDarco, ReducerTypes } from '../DarcoContext';
+import { useDarco, ReducerTypes, Quality } from '../DarcoContext';
 import { Button, SidePanel } from '../styles'
 import SegmentedPicker from './SegmentedPicker';
 import ThemePicker from './ThemePicker';
@@ -44,8 +44,9 @@ const SettingsPanel = () => {
     }
 
     const updateQuality = e => {
+        console.log(e)
         if (state.options.quality !== e)
-            dispatch({ type: ReducerTypes.O_Quality, data: e })
+            dispatch({ type: ReducerTypes.O_Quality, data: e === 0 ? Quality.High : Quality.Low })
     }
 
     const onFileChange = e => dispatch({ type: ReducerTypes.Idle, data: e.target.files[0] })
@@ -89,6 +90,7 @@ const SettingsPanel = () => {
                 </div>
                 <SegmentedPicker
                     options={options}
+                    defaultSelected={state.options.quality === Quality.High ? 0 : 1}
                     onSelectionChange={updateQuality}
                 />
             </DataSection>

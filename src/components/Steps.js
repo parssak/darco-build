@@ -7,6 +7,7 @@ import { ReactComponent as DarkMode } from '../svgs/darkmode.svg';
 import { ReactComponent as Share } from '../svgs/share.svg';
 import { primary, success, loading } from '../styles/constants';
 import { ReducerTypes, useDarco } from '../DarcoContext';
+import PDFBuilder from './PDFBuilder';
 
 const buttonTexts = ["Select PDF", "Convert", "Loading", "Download"]
 
@@ -23,27 +24,12 @@ const Steps = () => {
                 dispatch({ type: ReducerTypes.Loading });
                 break;
             case ReducerTypes.Download:
-                handleDownload();
+                PDFBuilder(state.images, state)
                 break;
             default:
                 break;
         }
 
-    }
-    
-    const handleDownload = () => {
-        if (state.info.numPages <= 3) {
-            state.downloadRef.click()
-            return;
-        }
-        
-        setTimeout(() => {
-            if (Date.now() - state.downloadTime > 5000) {
-                state.downloadRef.click()
-            } else {
-                handleDownload()
-            }
-        }, 5000)
     }
     
     const onFileChange = e => dispatch({ type: ReducerTypes.Idle, data: e.target.files[0] })
