@@ -42,6 +42,7 @@ const SegmentedPicker = ({ options, defaultSelected = 0, onSelectionChange = e =
     const [selected, setSelected] = useState(defaultSelected);
     useEffect(() => {
         onSelectionChange(selected)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selected])
     return (
         <PickerContainer>

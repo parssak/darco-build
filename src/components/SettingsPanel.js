@@ -7,13 +7,6 @@ import ThemePicker from './ThemePicker';
 import { ReactComponent as DarkMode } from '../svgs/darkmode.svg';
 import LoadingBar from './LoadingBar'
 
-const SettingsPanelContainer = styled(SidePanel)`
-    grid-area: settings;
-    /* @media (max-width: 1000px) {
-        display: none;
-        ${props => props.show && `display: initial;`}
-    } */
-`;
 
 const DataTitle = styled.h3`
     font-size: 1.4rem;
@@ -44,7 +37,6 @@ const SettingsPanel = () => {
     }
 
     const updateQuality = e => {
-        console.log(e)
         if (state.options.quality !== e)
             dispatch({ type: ReducerTypes.O_Quality, data: e === 0 ? Quality.High : Quality.Low })
     }
@@ -53,7 +45,7 @@ const SettingsPanel = () => {
 
     if (state.step >= ReducerTypes.Loading)
         return (
-            <SettingsPanelContainer>
+            <SidePanel style={{ gridArea: `settings`}}>
                 <DataSection >
                     <DataSection>
                         <div className="h">
@@ -68,12 +60,12 @@ const SettingsPanel = () => {
                 {state.step !== ReducerTypes.Download && <LoadingBar/>}
                 <Button secondary onClick={() => inputFile.current.click()} style={{ marginTop: 'auto' }}>Select New File</Button>
                 <input type="file" accept="application/pdf" ref={inputFile} style={{ display: 'none' }} onChange={onFileChange} />
-            </SettingsPanelContainer>
+            </SidePanel>
         )
 
 
     return (
-        <SettingsPanelContainer>
+        <SidePanel style={{ gridArea: `settings` }}>
             <DataSection>
                 <div className="h">
                     <DataTitle>{state.pdf.name}</DataTitle>
@@ -102,7 +94,7 @@ const SettingsPanel = () => {
             </DataSection>
             <Button secondary onClick={() => inputFile.current.click()} style={{ marginTop: 'auto' }}>Select New File</Button>
             <input type="file" accept="application/pdf" ref={inputFile} style={{ display: 'none' }} onChange={onFileChange} />
-        </SettingsPanelContainer>
+        </SidePanel>
     )
 }
 
