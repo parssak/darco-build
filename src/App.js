@@ -46,12 +46,12 @@ function App() {
   const target = useRef(null)
   const size = useSize(target)
   // eslint-disable-next-line no-unused-vars
-  const { _, dispatch } = useDarco()
+  // const { _, dispatch } = useDarco()
 
-  window.recieveDataFromSwift = data => {
-    alert("recieved pdf from swift!");
-    dispatch({ type: ReducerTypes.Idle, data: data })
-  }
+  // window.recieveDataFromSwift = data => {
+  //   alert("recieved pdf from swift!");
+  //   dispatch({ type: ReducerTypes.Idle, data: data })
+  // }
   
   return (
     <AppContainer ref={target}>
@@ -63,7 +63,7 @@ function App() {
             <stop stopColor="#5856D6" stopOpacity="0.72" />
             <stop offset="1" stopOpacity="0" />
           </radialGradient>
-          <radialGradient id="paint1_radial" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform={`translate(1448.12 849.716) rotate(-159.161) scale(850.184 809.54)`}>
+          <radialGradient id="paint1_radial" cx="0" cy="0" r="0.5" gradientUnits="userSpaceOnUse" gradientTransform={`translate(1448.12 849.716) rotate(-159.161) scale(850.184 809.54)`}>
             <stop stopColor="#AF52DE" stopOpacity="0.41" />
             <stop offset="1" stopColor="#2A1A87" stopOpacity="0" />
           </radialGradient>

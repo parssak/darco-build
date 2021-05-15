@@ -1,6 +1,7 @@
 {
   "name": "darco-app",
   "version": "0.1.0",
+  "homepage": ".",
   "private": true,
   "dependencies": {
     "@react-hook/resize-observer": "^1.2.0",

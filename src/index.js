@@ -5,10 +5,8 @@ import App from './App';
 import DarcoProvider from './DarcoContext';
 
 ReactDOM.render(
-  <React.StrictMode>
     <DarcoProvider>
       <App />
-    </DarcoProvider>
-  </React.StrictMode>,
+    </DarcoProvider>,
   document.getElementById('root')
 );
